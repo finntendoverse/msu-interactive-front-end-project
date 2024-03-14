@@ -1,0 +1,19 @@
+:root {
+    --black: black;
+    --white: white;
+    --purple: rgb(92, 12, 119);
+}
+* {
+    background-color:var(--black);
+}
+
+h1,
+h2,
+h3,
+p {
+    color: var(--white);
+}
+
+header {
+    background-color: var(--purple);
+}
