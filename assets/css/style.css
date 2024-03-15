@@ -8,6 +8,19 @@
     background-color:var(--black);
 }
 
+.irish-grover-regular {
+    font-family: "Irish Grover", system-ui;
+    font-weight: 400;
+    font-style: normal;
+  }
+
+.pacifico-regular {
+font-family: "Pacifico", cursive;
+font-weight: 400;
+font-style: normal;
+}
+  
+
 h1,
 h2,
 h3,
@@ -21,6 +34,9 @@ header {
 }
 
 h1 {
+    font-family: "Irish Grover", system-ui;
+    font-weight: 400;
+    font-style: normal;
     background-color: var(--purple);
     text-align: center;
     margin: auto;
@@ -33,6 +49,10 @@ h1 {
 }
 
 #search-button {
+    font-family: "Pacifico", cursive;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 1em;
     position: absolute;
     left: 225px;
     top: 30px;
@@ -40,6 +60,10 @@ h1 {
 }
 
 #randomBtn {
+    font-family: "Pacifico", cursive;
+    font-weight: 200;
+    font-style: normal;
+    font-size: 1em;
     position: absolute;
     right: 30px;
     top: 30px;
@@ -71,7 +95,7 @@ ul li a {
     text-decoration: none;
 }
 
-@media (max-width: 1030px) {
+@media (max-width: 1090px) {
     .search-bar {
         top: 100px;
         display: block;
@@ -79,6 +103,14 @@ ul li a {
         margin: 0 auto;
         left: 0;
         right: 0;
+    }
+
+    #search-button {
+        position: absolute;
+        right: 5%;
+        left: 60%;
+        top: 100px;
+        color: var(--purple);
     }
     
     #randomBtn {
