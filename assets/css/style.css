@@ -80,6 +80,14 @@ ul li a {
         left: 0;
         right: 0;
     }
+
+    #search-button {
+        position: absolute;
+        right: 5%;
+        left: 60%;
+        top: 100px;
+        color: var(--purple);
+    }
     
     #randomBtn {
         display: block;
