@@ -40,3 +40,60 @@ h1 {
     border: 1px solid var(--white);
     background-color: var(--blue);
 }
+
+ul {
+    display: flex;
+    flex-direction: row;
+    background-color: var(--purple);
+    justify-content: flex-end;
+    flex-wrap: wrap;
+}
+
+li {
+    list-style: none;
+    background-color: var(--purple);
+    padding: 0px 30px 0px 30px;
+    border-left: 5px solid black;
+    margin: 0px;
+    font-size: 2em;
+    text-align: center;
+}
+ul li a {
+    color: var(--white);
+    text-decoration: none;
+}
+
+
+@media (max-width: 885px) {
+    .search-bar,
+    #randomBtn {
+        top: 100px;
+    }
+   
+    header {
+        padding-bottom: 90px;
+    }
+}
+
+@media (max-width: 500px) {
+    .search-bar {
+        display: block;
+        width: 90vw;
+        margin: 0 auto;
+        left: 0;
+        right: 0;
+    }
+    
+    #randomBtn {
+        display: block;
+        width: 90vw;
+        top: 160px;
+        margin: 0 auto;
+        left: 0;
+        right: 0;
+    }
+    
+    header {
+        padding-bottom: 150px;
+    }
+}
