@@ -1,7 +1,8 @@
 :root {
     --black: black;
     --white: white;
-    --purple: rgb(92, 12, 119);
+    --purple: rgb(50, 3, 100);
+    --blue: rgb(42, 42, 161);
 }
 * {
     background-color:var(--black);
@@ -16,4 +17,26 @@ p {
 
 header {
     background-color: var(--purple);
+    padding: 20px 0px 20px 2px;
+}
+
+h1 {
+    background-color: var(--purple);
+    text-align: center;
+    margin: auto;
+}
+
+.search-bar {
+    position: absolute;
+    left: 30px;
+    top: 30px;
+}
+
+#randomBtn {
+    position: absolute;
+    right: 30px;
+    top: 30px;
+    color: var(--white);
+    border: 1px solid var(--white);
+    background-color: var(--blue);
 }
