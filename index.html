@@ -21,10 +21,36 @@
     <h1 class="main-title">Boozy Bitches</h1>
     <button id="randomBtn" class="button-primary">I'm feeling adventurous</button> 
   </header>
-  <script>
+
+  <nav>
+    <ul>
+        <li><a href="#">Vodka</a></li>
+        <li><a href="#">Gin</a></li>
+        <li><a href="#">Whiskey</a></li>
+        <li><a href="#">Bourbon</a></li>
+        <li><a href="#">Tequila</a></li>
+    </ul>
+  </nav>
+
+  <main> 
+    <aside>
+      <h2>Favorite Drinks</h2>
+      <p id="favoriteDrinks" class="favorite-drinks"></p>
+    </aside>
+
+    <section>
+      <div id="loadedInfo" class="loaded-info"></div>
+    </section>
+  </main>
+
+
+</body>  
+    
+<script>
     const apiUrl1 = 'https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=Ordinary_Drink';
     const apiUrl2 = 'https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=Cocktail';
-  
+    const apiUrl3 = 'https:www.thecocktaildb.com/api/json/v1/1/random.php';
+
     function fetchCocktails(apiUrl) {
       return fetch(apiUrl)
         .then(response => response.json())
@@ -35,24 +61,14 @@
         });
     }
   
-    Promise.all([fetchCocktails(apiUrl1), fetchCocktails(apiUrl2)])
-      .then(([ordinaryDrinks, cocktails]) => {
+    Promise.all([fetchCocktails(apiUrl1), fetchCocktails(apiUrl2), fetchCocktails(apiUrl3)])
+      .then(([ordinaryDrinks, cocktails, randomDrink]) => {
         console.log('Ordinary Drinks:', ordinaryDrinks);
         console.log('Cocktails:', cocktails);
-     
+        console.log('Random', randomDrink)
       });
-  </script>
-  <nav>
-    <ul>
-        <li><a href="#">Vodka</a></li>
-        <li><a href="#">Gin</a></li>
-        <li><a href="#">Whiskey</a></li>
-        <li><a href="#">Bourbon</a></li>
-        <li><a href="#">Tequila</a></li>
-    </ul>
-</nav>
-
-
-    </body>
+</script>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="https://code.jquery.com/ui/1.13.1/jquery-ui.min.js"></script>
 <script src="./assets/js/script.js"></script>
 </html>
