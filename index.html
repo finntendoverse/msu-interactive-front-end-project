@@ -16,31 +16,26 @@
     <button id="randomBtn" class="button-primary">I'm feeling adventurous</button> 
   </header>
   <script>
-    const apiUrl = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=margarita';
-
-    function fetchCocktails() {
-      fetch(apiUrl)
+    const apiUrl1 = 'https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=Ordinary_Drink';
+    const apiUrl2 = 'https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=Cocktail';
+  
+    function fetchCocktails(apiUrl) {
+      return fetch(apiUrl)
         .then(response => response.json())
-        .then(data => {
-          const cocktails = data.drinks;
-          const cocktailList = document.getElementById('cocktail-list');
-
-          cocktailList.innerHTML = '';
-
-          cocktails.forEach(cocktail => {
-            const cocktailName = cocktail.strDrink;
-            const cocktailIngredient = cocktail.strIngredient1;
-            const cocktailElement = document.createElement('p');
-            cocktailElement.textContent = `Name: ${cocktailName}, Ingredient: ${cocktailIngredient}`;
-            cocktailList.appendChild(cocktailElement);
-          });
-        })
+        .then(data => data.drinks)
         .catch(error => {
           console.error('Error fetching cocktail data:', error);
+          return [];
         });
     }
-    fetchCocktails();
-    </script>
+  
+    Promise.all([fetchCocktails(apiUrl1), fetchCocktails(apiUrl2)])
+      .then(([ordinaryDrinks, cocktails]) => {
+        console.log('Ordinary Drinks:', ordinaryDrinks);
+        console.log('Cocktails:', cocktails);
+     
+      });
+  </script>
   <nav>
     <div class="boozyBitches">
         <a href="#">Drink Search</a>
@@ -52,6 +47,8 @@
         <li><a href="#">ingredients</a></li>
     </ul>
 </nav>
+
+
     </body>
 
 </html>
