@@ -66,4 +66,8 @@ Promise.all([fetchCocktails(apiUrl1), fetchCocktails(apiUrl2), fetchCocktails(ap
     console.log('Random', randomDrink)
   });
 
+  function fetchByIngredients() {
+    
+  }
+
   
