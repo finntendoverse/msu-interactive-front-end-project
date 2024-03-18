@@ -1,10 +1,8 @@
 const apiUrl1 = 'https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=Ordinary_Drink';
 const apiUrl2 = 'https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=Cocktail';
 const apiUrl3 = 'https:www.thecocktaildb.com/api/json/v1/1/random.php';
-const apiUrl4 = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=margarita'
 const randomButton = document.querySelector('#randomBtn');
 
-main
 function fetchCocktails() {
  
   fetch(apiUrl1)
