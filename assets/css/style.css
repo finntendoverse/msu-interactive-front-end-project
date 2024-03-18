@@ -95,6 +95,26 @@ ul li a {
     text-decoration: none;
 }
 
+main {
+    display: flex;
+    flex-direction: row;
+}
+
+#favorites-section {
+    flex: 0 0 30%;
+}
+
+#favorites-section-header {
+    background-color: var(--purple);
+    position: absolute;
+    top: 100px;
+    left: 30px;
+}
+
+#info-section {
+    flex: 1 1 70%;
+}
+
 @media (max-width: 1090px) {
     .search-bar {
         top: 100px;
@@ -128,5 +148,17 @@ ul li a {
 
     ul {
         flex-direction: column;
+    }
+
+    main {
+        flex-direction: column;
+    }
+
+    #favorites-section-header {
+        position: relative;
+        top: 0px;
+        left: 0px;
+        text-align: center;
+        background-color: black;
     }
 }
