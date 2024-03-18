@@ -1,6 +1,7 @@
 const apiUrl1 = 'https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=Ordinary_Drink';
 const apiUrl2 = 'https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=Cocktail';
 const apiUrl3 = 'https:www.thecocktaildb.com/api/json/v1/1/random.php';
+const randomButton = document.querySelector('#randomBtn');
 
 function fetchCocktails() {
  
@@ -41,3 +42,27 @@ function fetchCocktails() {
 
 fetchCocktails();
 
+function getRandonCocktail() {
+  fetch(Random_API_URL)
+    .then(response => response.json)
+
+}
+
+function fetchCocktails(apiUrl) {
+  return fetch(apiUrl)
+    .then(response => response.json())
+    .then(data => data.drinks)
+    .catch(error => {
+      console.error('Error fetching cocktail data:', error);
+      return [];
+    });
+}
+
+Promise.all([fetchCocktails(apiUrl1), fetchCocktails(apiUrl2), fetchCocktails(apiUrl3)])
+  .then(([ordinaryDrinks, cocktails, randomDrink]) => {
+    console.log('Ordinary Drinks:', ordinaryDrinks);
+    console.log('Cocktails:', cocktails);
+    console.log('Random', randomDrink)
+  });
+
+  
