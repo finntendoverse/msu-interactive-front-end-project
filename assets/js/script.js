@@ -1,8 +1,6 @@
 const apiUrl1 = 'https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=Ordinary_Drink';
 const apiUrl2 = 'https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=Cocktail';
 const apiUrl3 = 'https:www.thecocktaildb.com/api/json/v1/1/random.php';
-
-
 const randomButton = document.querySelector('#randomBtn');
 
 function fetchCocktails() {
@@ -29,8 +27,7 @@ function fetchCocktails() {
       console.error('Error fetching cocktail data from apiUrl2:', error);
     });
 
-  const originalApiUrl = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=margarita';
-  fetch(originalApiUrl)
+  fetch(apiUrl4)
     .then(response => response.json())
     .then(data => {
       const cocktails = data.drinks;
