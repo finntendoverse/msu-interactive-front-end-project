@@ -119,6 +119,28 @@ main {
     flex: 1 1 70%;
 }
 
+h3 {
+    text-align: center;
+}
+
+#info-section img {
+    display: block;
+    margin: 0 auto;
+    width: 80%;
+}
+
+#info-section button {
+    display: block;
+    margin: 0 auto;
+    width: 80%;
+    color: white;
+    margin-bottom: 50px;
+    font-size: 1.5em;
+    text-transform: capitalize;
+    font-family: "Irish Grover", system-ui;
+    font-style: normal;
+}
+
 @media (max-width: 1090px) {
     .search-bar {
         top: 100px;
