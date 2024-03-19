@@ -4,6 +4,7 @@ const apiUrl3 = 'https:www.thecocktaildb.com/api/json/v1/1/random.php';
 const apiUrl4 = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=margarita'
 const randomButton = document.querySelector('#randomBtn');
 const loadedInfo = document.querySelector('#loadedInfo');
+let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
 
 function fetchCocktails() {
  
@@ -119,7 +120,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const cocktailImage = cocktail.strDrinkThumb;
 
             const cocktailElement = document.createElement('div');
-            const cocktailNameElement = document.createElement('p');
+            const cocktailNameElement = document.createElement('h3');
             const cocktailImageElement = document.createElement('img');
             const favoriteButton = document.createElement('button');
 
@@ -176,13 +177,38 @@ vodkaButton.addEventListener('click', function() {
       }
 
       for (i=0; i < data.drinks.length; i++) {
-        let drinkName = document.createElement('h3');
-        drinkName.innerHTML = data.drinks[i].strDrink;
-        loadedInfo.appendChild(drinkName);
+        const cocktailElement = document.createElement('div');
+        
+        const cocktailName = document.createElement('h3');
+        cocktailName.innerHTML = data.drinks[i].strDrink;
+        cocktailElement.appendChild(cocktailName);
 
         let drinkImg = document.createElement('img');
         drinkImg.setAttribute('src', data.drinks[i].strDrinkThumb);
-        loadedInfo.appendChild(drinkImg);
+        cocktailElement.appendChild(drinkImg);
+
+        const favoriteButton = document.createElement('button');
+        favoriteButton.textContent = 'Favorite';
+        cocktailElement.appendChild(favoriteButton);
+        favoriteButton.addEventListener('click', function() { 
+          const isFavorited = favorites.some(favorite => favorite === cocktailName.innerHTML);
+          if (!isFavorited) {
+            console.log(cocktailName.innerHTML);
+            favorites.push(cocktailName.innerHTML);
+          
+            localStorage.setItem('favorites', JSON.stringify(favorites));
+            
+            favoriteButton.textContent = 'Favorited';
+          } else {
+            favorites = favorites.filter(favorite => favorite !== cocktailName.innerHTML);
+            
+            localStorage.setItem('favorites', JSON.stringify(favorites));
+            
+            favoriteButton.textContent = 'Favorite';
+          }
+        });
+
+        loadedInfo.appendChild(cocktailElement);
       }
   })
 })
