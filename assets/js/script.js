@@ -130,13 +130,30 @@ function renderDrinks(data) {                                                   
           favorites.push(cocktailName.innerHTML);                                             // THEN the drink name is added to the favorites array
           localStorage.setItem('favorites', JSON.stringify(favorites));                       // THEN the favorites array is saved to local storage
           favoriteButton.textContent = 'Favorited';                                           // THEN the text of the favorites button is changed to say "favorited" instead of "favorite"
+          
         } else {                                                                              // IF the drink is favorited
           favorites = favorites.filter(favorite => favorite !== cocktailName.innerHTML);      // THEN the drink name is removed from the favorites array
           localStorage.setItem('favorites', JSON.stringify(favorites));                       // THEN the favorites array is saved to local storage
           favoriteButton.textContent = 'Favorite';                                            // THEN the text of the favorites button is changed to say "favorite" instead of "favorited"
       }
+      renderFavorites();                                                                      // THEN the favorited drinks are rendered onto the page
     });
     loadedInfo.appendChild(cocktailElement);                                                  // THEN the cocktailElement div is appended to theloadedInfo section
+  }
+}
+
+// function to render the favorites section onto the page
+function renderFavorites() {                                                  // WHEN the renderFavorites function is called
+  let favoriteDrinksSection = document.querySelector("#favoriteDrinks");      // THEN the favoriteDrinksSecition is referenced
+  while (favoriteDrinksSection.firstChild) {                                  // WHILE the favoriteDrinksSection has children
+    favoriteDrinksSection.removeChild(favoriteDrinksSection.firstChild)       // THEN the children are removed
+  }
+  if (favorites) {                                                            // IF there are any favorites
+    for (i=0; i < favorites.length; i++) {                                    // FOR each favorite
+      let favoriteDrink = document.createElement('p')                         // THEN a p element is created
+      favoriteDrink.innerHTML = favorites[i];                                 // THEN the text of that p element becomes the drink name
+      favoriteDrinksSection.appendChild(favoriteDrink);                       // THEN the p element is appended to the favoriteDrinksSection
+    }
   }
 }
 
@@ -223,3 +240,8 @@ tequilaButton.addEventListener('click', function() {
       console.error('Error fetching cocktail data:', error);
     });
 })
+
+// displays the saved favorites when the page is loaded
+document.addEventListener('DOMContentLoaded', function() {    // WHEN the page is loaded
+  renderFavorites();                                          // THEN the favorites are rendered onto the page
+});
