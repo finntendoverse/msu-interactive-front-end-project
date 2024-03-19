@@ -90,9 +90,13 @@ li {
     font-size: 2em;
     text-align: center;
 }
-ul li a {
+
+nav ul li {
     color: var(--white);
     text-decoration: none;
+}
+nav ul li:hover {
+    cursor: pointer;
 }
 
 main {
