@@ -42,7 +42,7 @@ function fetchCocktails() {
 }
 function displayCocktails(cocktails) {
   const loadedInfo = document.getElementById('loadedInfo');
-  loadedInfo.innerHTML = ''; // Clear previous content
+  loadedInfo.innerHTML = ''; 
   if (cocktails && cocktails.length > 0) {
     cocktails.forEach(cocktail => {
       const cocktailName = cocktail.strDrink;
