@@ -115,8 +115,36 @@ main {
     left: 30px;
 }
 
+#favorites-section p {
+    font-size: 1.25em;
+    text-align: center;
+    margin: 0px 0px 10px 0px;
+}
+
 #info-section {
     flex: 1 1 70%;
+}
+
+h3 {
+    text-align: center;
+}
+
+#info-section img {
+    display: block;
+    margin: 0 auto;
+    width: 80%;
+}
+
+#info-section button {
+    display: block;
+    margin: 0 auto;
+    width: 80%;
+    color: white;
+    margin-bottom: 50px;
+    font-size: 1.5em;
+    text-transform: capitalize;
+    font-family: "Irish Grover", system-ui;
+    font-style: normal;
 }
 
 @media (max-width: 1090px) {
