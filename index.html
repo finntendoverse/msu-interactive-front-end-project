@@ -33,8 +33,17 @@
             if (cocktails && cocktails.length > 0) {
               cocktails.forEach(cocktail => {
                 const cocktailName = cocktail.strDrink;
+                const cocktailImage = cocktail.strDrinkThumb;
+
                 const cocktailElement = document.createElement('div');
-                cocktailElement.textContent = cocktailName;
+                const cocktailNameElement = document.createElement('p');
+                const cocktailImageElement = document.createElement('img');
+
+                cocktailNameElement.textContent = cocktailName;
+                cocktailImageElement.src = cocktailImage;
+
+                cocktailElement.appendChild(cocktailNameElement);
+                cocktailElement.appendChild(cocktailImageElement);
                 loadedInfo.appendChild(cocktailElement);
               });
             } else {
