@@ -248,16 +248,20 @@ function getRandomCocktail(){
   
   fetch('https://www.thecocktaildb.com/api/json/v1/1/random.php')
     .then(res => res.json())
-    .then( data => {
-      const randomCocktail = data.random
-      console.log(randomCocktail)
-      document.querySelector('cocktail-name')
-      })
-      .catch(error => {
-        console.error('Error fetching cocktail data:', error);
-      });
+    .then(data => {
+      const randomCocktail = data.drinks[0];
+      console.log(randomCocktail);
+      const cocktailNameElement = document.querySelector('#cocktail-name');
+      if (cocktailNameElement) {
+        cocktailNameElement.textContent = randomCocktail.strDrink; 
+      }
       
-      return 
+    })
+    .catch(error => {
+      console.error('Error fetching cocktail data:', error);
+    });
+
 }
+
 
 randomButton.addEventListener('click', getRandomCocktail);
