@@ -138,18 +138,48 @@ function renderDrinks(data) {                                                   
 }
 
 // function to render the favorites section onto the page
-function renderFavorites() {                                                  // WHEN the renderFavorites function is called
-  let favoriteDrinksSection = document.querySelector("#favoriteDrinks");      // THEN the favoriteDrinksSecition is referenced
-  while (favoriteDrinksSection.firstChild) {                                  // WHILE the favoriteDrinksSection has children
-    favoriteDrinksSection.removeChild(favoriteDrinksSection.firstChild)       // THEN the children are removed
+function renderFavorites() {
+  let favoriteDrinksSection = document.querySelector("#favoriteDrinks");
+  while (favoriteDrinksSection.firstChild) {
+    favoriteDrinksSection.removeChild(favoriteDrinksSection.firstChild);
   }
-  if (favorites) {                                                            // IF there are any favorites
-    for (i=0; i < favorites.length; i++) {                                    // FOR each favorite
-      let favoriteDrink = document.createElement('p')                         // THEN a p element is created
-      favoriteDrink.innerHTML = favorites[i];                                 // THEN the text of that p element becomes the drink name
-      favoriteDrinksSection.appendChild(favoriteDrink);                       // THEN the p element is appended to the favoriteDrinksSection
+  if (favorites) {
+    for (let i = 0; i < favorites.length; i++) {
+      let favoriteDrink = document.createElement('p');
+      favoriteDrink.innerHTML = favorites[i];
+      favoriteDrink.addEventListener('click', function() {
+        // Call a function to display details of the clicked favorite drink
+        displayDrinkDetails(favorites[i]);
+      });
+      favoriteDrinksSection.appendChild(favoriteDrink);
     }
   }
+}
+
+function displayDrinkDetails(drinkName) {
+  // Fetch details of the clicked drink by its name
+  let apiUrl = `https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${drinkName}`;
+  fetch(apiUrl)
+    .then(response => response.json())
+    .then(data => {
+      const drink = data.drinks[0];
+      if (drink) {
+    
+        const modal = document.getElementById("myModal");
+        const cocktailNameElement = document.querySelector('#cocktail-name');
+        const cocktailImageElement = document.querySelector('#cocktail-image');
+        if (cocktailNameElement && cocktailImageElement) {
+          cocktailNameElement.textContent = drink.strDrink;
+          cocktailImageElement.src = drink.strDrinkThumb;
+          modal.style.display = "block"; // Show the modal
+        }
+      } else {
+        console.error('Drink details not found.');
+      }
+    })
+    .catch(error => {
+      console.error('Error fetching drink details:', error);
+    });
 }
 
 // displays drinks to the page when a drink name or ingredient is searched
