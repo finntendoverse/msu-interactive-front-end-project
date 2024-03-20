@@ -274,10 +274,12 @@ function getRandomCocktail() {
       const randomCocktail = data.drinks[0];
       const cocktailNameElement = document.querySelector('#cocktail-name');
       const cocktailDetailsElement = document.querySelector('#cocktail-details');
+      const cocktailImageElement = document.querySelector('#cocktail-image');
       
-      if (randomCocktail && cocktailNameElement && cocktailDetailsElement) {
+      if (randomCocktail && cocktailNameElement && cocktailImageElement && cocktailDetailsElement) {
         cocktailNameElement.textContent = randomCocktail.strDrink;
-        
+        cocktailImageElement.src = randomCocktail.strDrinkThumb;
+        cocktailImageElement.innerHTML = '';
         cocktailDetailsElement.innerHTML = '';
         
         for (const [key, value] of Object.entries(randomCocktail)) {
