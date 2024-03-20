@@ -1,8 +1,7 @@
 const apiUrl1 = 'https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=Ordinary_Drink';
 const apiUrl2 = 'https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=Cocktail';
-const apiUrl3 = 'https:www.thecocktaildb.com/api/json/v1/1/random.php';
+const apiUrl3 = 'https://www.thecocktaildb.com/api/json/v1/1/random.php';
 const apiUrl4 = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=margarita'
-const randomButton = document.querySelector('#randomBtn');
 const loadedInfo = document.querySelector('#loadedInfo');
 let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
 
@@ -86,11 +85,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 fetchCocktails();
 
-function getRandonCocktail() {
-  fetch(Random_API_URL)
-    .then(response => response.json)
 
-}
 
 Promise.all([fetchCocktails(apiUrl1), fetchCocktails(apiUrl2), fetchCocktails(apiUrl3)])
   .then(([ordinaryDrinks, cocktails, randomDrink]) => {
@@ -245,3 +240,24 @@ tequilaButton.addEventListener('click', function() {
 document.addEventListener('DOMContentLoaded', function() {    // WHEN the page is loaded
   renderFavorites();                                          // THEN the favorites are rendered onto the page
 });
+
+
+const randomButton = document.querySelector('#randomBtn');
+
+function getRandomCocktail(){
+  
+  fetch('https://www.thecocktaildb.com/api/json/v1/1/random.php')
+    .then(res => res.json())
+    .then( data => {
+      const randomCocktail = data.random
+      console.log(randomCocktail)
+      document.querySelector('cocktail-name')
+      })
+      .catch(error => {
+        console.error('Error fetching cocktail data:', error);
+      });
+      
+      return 
+}
+
+randomButton.addEventListener('click', getRandomCocktail);
