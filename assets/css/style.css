@@ -119,6 +119,28 @@ main {
     flex: 1 1 70%;
 }
 
+
+  
+  button {
+    cursor: pointer;
+    border: none;
+    font-weight: 600;
+  }
+  
+  .modal {
+    display: flex;
+    align-items: center;
+    width: 50%;
+    align-items: center;
+    justify-content: end;
+  }
+  
+
+  
+  .shidden {
+    display: none;
+  }
+
 @media (max-width: 1090px) {
     .search-bar {
         top: 100px;

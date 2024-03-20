@@ -2,7 +2,7 @@ const apiUrl1 = 'https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=Ordina
 const apiUrl2 = 'https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=Cocktail';
 const apiUrl3 = 'https:www.thecocktaildb.com/api/json/v1/1/random.php';
 const apiUrl4 = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=margarita'
-const randomButton = document.querySelector('#randomBtn');
+
 const loadedInfo = document.querySelector('#loadedInfo');
 
 function fetchCocktails() {
@@ -274,4 +274,19 @@ tequilaButton.addEventListener('click', function() {
       }
   })
 })
-  
+
+
+
+const modal = document.querySelector(".modal");
+const openModalBtn = document.querySelector(".button-primary");
+const closeModalBtn = document.querySelector(".btn-close");
+
+openModalBtn.addEventListener("click", generateRandomCocktail)
+
+function generateRandomCocktail(){
+  fetch('https:www.thecocktaildb.com/api/json/v1/1/random.php')
+    
+  .then(res => res.json)
+  .then(data =>{
+      
+})}
