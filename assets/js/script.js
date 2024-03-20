@@ -264,4 +264,46 @@ function getRandomCocktail(){
 }
 
 
+const modal = document.getElementById("myModal");
+const closeModal = document.getElementsByClassName("close")[0];
+
+function getRandomCocktail() {
+  fetch('https://www.thecocktaildb.com/api/json/v1/1/random.php')
+    .then(res => res.json())
+    .then(data => {
+      const randomCocktail = data.drinks[0];
+      const cocktailNameElement = document.querySelector('#cocktail-name');
+      const cocktailDetailsElement = document.querySelector('#cocktail-details');
+      
+      if (randomCocktail && cocktailNameElement && cocktailDetailsElement) {
+        cocktailNameElement.textContent = randomCocktail.strDrink;
+        
+        cocktailDetailsElement.innerHTML = '';
+        
+        for (const [key, value] of Object.entries(randomCocktail)) {
+          if (key.includes('strIngredient') && value) {
+            cocktailDetailsElement.innerHTML += `<p>${value}</p>`;
+          }
+        }
+        
+        modal.style.display = "block";
+      }
+    })
+    .catch(error => {
+      console.error('Error fetching cocktail data:', error);
+    });
+}
+
+
+closeModal.onclick = function() {
+  modal.style.display = "none";
+}
+
+
+window.onclick = function(event) {
+  if (event.target == modal) {
+    modal.style.display = "none";
+  }
+}
+
 randomButton.addEventListener('click', getRandomCocktail);
