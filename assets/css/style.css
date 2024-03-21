@@ -161,6 +161,17 @@ main {
 
 #favoriteDrinks {
     background-color: var(--purple);
+    font-family: var(--secondary-font);
+    color: var(--white);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 6px 20px rgba(0, 0, 0, 0.15);
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+#favoriteDrinks:hover {
+    background-color: rgb(80, 3, 150);
+    transform: scale(1.02);
 }
 
 #favorites-section-header {
