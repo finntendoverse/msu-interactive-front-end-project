@@ -22,13 +22,14 @@
     <button id="randomBtn" class="button-primary">I'm feeling adventurous</button> 
   </header>
 
-<form class="modal">
-  <section class="modal-contents">
-      <h2><span class="cocktail-name">Drink Name here</span></h2>
-      <img src="" alt="cocktail image">
-      <p class="ingredients">Ingredients</p>
-  </section>
-</form>
+  <form id="myModal" class="modal">
+    <section class="modal-content">
+      <span class="close">&times;</span>
+      <h2 id="cocktail-name"></h2>
+      <img id="cocktail-image" src="" alt="Random Cocktail Image">
+      <div id="cocktail-details"></div>
+    </section>
+  </form>
   <nav>
     <ul>
       <li id="vodka">Vodka</li>
