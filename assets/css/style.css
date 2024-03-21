@@ -20,16 +20,40 @@
     width: 100%;
     height: 100%;
     overflow: auto; 
-    background: rgba(0,0,0,0.4);      
+    background: rgba(0,0,0,0.4);
 }
 
 .modal-content {
     background-color: var(--purple);
-    margin: 15% auto; 
-    padding: 20px;
-    border: 1px solid #888;
+    border: 1px solid var(--white);
+    margin: 15% auto;
     width: 80%;
     text-align: center;
+}
+
+.modal img {
+    width: 90%;
+    border-radius: 20px;
+}
+
+.modal h2 {
+    padding: 10px;
+    margin: 0px;
+}
+
+#cocktail-name,
+.close,
+#cocktail-details,
+#cocktail-details p {
+    background-color: var(--purple);
+}
+
+#cocktail-name {
+    font-family: var(--main-font);
+}
+
+#cocktail-details p {
+    font-size: 2em;
 }
 
 .close {
