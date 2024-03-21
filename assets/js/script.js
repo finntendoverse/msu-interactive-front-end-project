@@ -314,7 +314,7 @@ function getRandomCocktail() {
         
         for (const [key, value] of Object.entries(randomCocktail)) {
           if (key.includes('strIngredient') && value) {
-            cocktailDetailsElement.innerHTML += `<p>${value}</p>`;
+            cocktailDetailsElement.innerHTML += `<li>${value}</li>`;
           }
         }
         

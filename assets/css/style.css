@@ -28,8 +28,10 @@
     background-color: var(--purple);
     border: 1px solid var(--white);
     margin: 15% auto;
+    padding-bottom: 10px;
     width: 80%;
     text-align: center;
+    border-radius: 30px;
 }
 
 .modal img {
@@ -45,16 +47,20 @@
 #cocktail-name,
 .close,
 #cocktail-details,
-#cocktail-details p {
-    background-color: var(--purple);
+#cocktail-details li {
+    background-color: transparent;
 }
 
 #cocktail-name {
     font-family: var(--main-font);
 }
 
-#cocktail-details p {
+#cocktail-details li {
     font-size: 2em;
+    margin: 0 auto;
+    margin-left: 40%;
+    text-align: left;
+    color: var(--white);
 }
 
 .close {
@@ -151,7 +157,9 @@ ul {
     margin-bottom: 0;
 }
 
-li {
+nav ul li {
+    color: var(--white);
+    text-decoration: none;
     font-family: var(--main-font);
     list-style: none;
     background-color: var(--purple);
@@ -161,6 +169,7 @@ li {
     margin: 0px;
     font-size: 2em;
 }
+
 
 nav ul li {
     color: var(--white);
@@ -281,7 +290,7 @@ h3 {
         flex-direction: column;
     }
 
-    ul li {
+    nav ul li {
         border-left: none;
         text-align: center;
     }
@@ -304,5 +313,9 @@ h3 {
         margin: 0px;
         padding: 0px 0px 10px 0px;
         text-align: center;
+    }
+
+    #cocktail-details li {
+        margin-left: 30%;
     }
 }
