@@ -3,10 +3,15 @@
     --white: white;
     --purple: rgb(50, 3, 100);
     --blue: rgb(42, 42, 161);
+    --main-font: "Irish Grover", system-ui;
+    --secondary-font: "Pacifico", cursive;
 }
+
 * {
     background-color:var(--black);
 }
+
+
 
 
 
@@ -60,6 +65,7 @@ font-style: normal;
 }
   
 
+
 h1,
 h2,
 h3,
@@ -73,9 +79,7 @@ header {
 }
 
 h1 {
-    font-family: "Irish Grover", system-ui;
-    font-weight: 400;
-    font-style: normal;
+    font-family: var(--main-font);
     background-color: var(--purple);
     text-align: center;
     margin: auto;
@@ -88,20 +92,18 @@ h1 {
 }
 
 #search-button {
-    font-family: "Pacifico", cursive;
-    font-weight: 400;
-    font-style: normal;
+    font-family: var(--secondary-font);
     font-size: 1em;
     position: absolute;
     left: 225px;
     top: 30px;
-    color: white;
+    color: var(--white);
+    border: 1px solid var(--white);
+    background-color: var(--blue);
 }
 
 #randomBtn {
-    font-family: "Pacifico", cursive;
-    font-weight: 200;
-    font-style: normal;
+    font-family: var(--secondary-font);
     font-size: 1em;
     position: absolute;
     right: 30px;
@@ -116,10 +118,11 @@ ul {
     flex-direction: row;
     background-color: var(--purple);
     justify-content: flex-end;
-    flex-wrap: wrap;
+    margin-bottom: 0;
 }
 
 li {
+    font-family: var(--main-font);
     list-style: none;
     background-color: var(--purple);
     padding: 0px 30px 0px 30px;
@@ -127,14 +130,15 @@ li {
     border-top: 5px solid var(--black);
     margin: 0px;
     font-size: 2em;
-    text-align: center;
 }
 
 nav ul li {
     color: var(--white);
     text-decoration: none;
 }
-nav ul li:hover {
+
+nav ul li:hover,
+#favorites-section p:hover {
     cursor: pointer;
 }
 
@@ -145,6 +149,11 @@ main {
 
 #favorites-section {
     flex: 0 0 30%;
+    background: var(--purple);
+}
+
+#favoriteDrinks {
+    background-color: var(--purple);
 }
 
 #favorites-section-header {
@@ -152,12 +161,13 @@ main {
     position: absolute;
     top: 100px;
     left: 30px;
+    font-family: var(--main-font);
 }
 
 #favorites-section p {
-    font-size: 1.25em;
-    text-align: center;
-    margin: 0px 0px 10px 0px;
+    font-size: 1.5em;
+    margin: 20px 0px 0px 30px;
+    background-color: var(--purple);
 }
 
 #info-section {
@@ -165,7 +175,10 @@ main {
 }
 
 h3 {
+    font-family: var(--main-font);
     text-align: center;
+    margin-top: 30px;
+    margin-bottom: 10px;
 }
 
 #info-section img {
@@ -180,10 +193,11 @@ h3 {
     width: 80%;
     color: white;
     margin-bottom: 50px;
-    font-size: 1.5em;
-    text-transform: capitalize;
-    font-family: "Irish Grover", system-ui;
-    font-style: normal;
+    font-size: 1em;
+    font-family: var(--secondary-font);
+    color: var(--white);
+    border: 1px solid var(--white);
+    background-color: var(--blue);
 }
 
 @media (max-width: 1090px) {
@@ -201,7 +215,6 @@ h3 {
         right: 5%;
         left: 60%;
         top: 100px;
-        color: var(--purple);
     }
     
     #randomBtn {
@@ -217,12 +230,19 @@ h3 {
         padding-bottom: 150px;
     }
 
-    ul {
+    ul,
+    main {
         flex-direction: column;
     }
 
-    main {
-        flex-direction: column;
+    ul li {
+        border-left: none;
+        text-align: center;
+    }
+
+    #favorites-section,
+    #favoriteDrinks {
+        background-color: var(--blue);
     }
 
     #favorites-section-header {
@@ -230,6 +250,13 @@ h3 {
         top: 0px;
         left: 0px;
         text-align: center;
-        background-color: black;
+        background-color: var(--blue);
+    }
+
+    #favorites-section p {
+        background-color: var(--blue);
+        margin: 0px;
+        padding: 0px 0px 10px 0px;
+        text-align: center;
     }
 }
