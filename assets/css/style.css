@@ -106,6 +106,13 @@ h1 {
     background-color: var(--blue);
 }
 
+#search-button:hover {
+    transform: scale(1.02);
+    cursor: pointer;
+    background-color: rgb(80, 3, 150);
+}
+
+
 #randomBtn {
     font-family: var(--secondary-font);
     font-size: 1em;
@@ -117,6 +124,11 @@ h1 {
     background-color: var(--blue);
 }
 
+#randomBtn:hover {
+    transform: scale(1.02);
+    cursor: pointer;
+    background-color: rgb(80, 3, 150);
+}
 ul {
     display: flex;
     flex-direction: row;
@@ -146,8 +158,6 @@ nav ul li:hover,
     transform: scale(1.02);
     cursor: pointer;
     background-color: rgb(80, 3, 150);
-    width: 40%;
-    margin-left: 125px;
 }
 
 
