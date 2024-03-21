@@ -293,7 +293,6 @@ function getRandomCocktail(){
 
 }
 
-
 const modal = document.getElementById("myModal");
 const closeModal = document.getElementsByClassName("close")[0];
 
