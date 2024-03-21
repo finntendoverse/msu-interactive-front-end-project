@@ -143,8 +143,14 @@ nav ul li {
 
 nav ul li:hover,
 #favorites-section p:hover {
+    transform: scale(1.02);
     cursor: pointer;
+    background-color: rgb(80, 3, 150);
+    width: 40%;
+    margin-left: 125px;
 }
+
+
 
 main {
     display: flex;
