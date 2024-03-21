@@ -11,6 +11,7 @@
     background-color:var(--black);
 }
 
+
 .modal {    
     display: none; 
     position: fixed; 
@@ -99,6 +100,8 @@ h1 {
     position: absolute;
     left: 30px;
     top: 30px;
+    font-family: var(--secondary-font)
+    
 }
 
 #search-button {
@@ -128,6 +131,17 @@ h1 {
     color: var(--white);
     border: 1px solid var(--white);
     background-color: var(--blue);
+    animation: bounce 0.5s infinite alternate; /* Apply bounce animation */
+}
+
+/* Define the bounce animation */
+@keyframes bounce {
+    0% {
+        transform: translateY(0);
+    }
+    100% {
+        transform: translateY(-5px);
+    }
 }
 
 #randomBtn:hover {
@@ -154,6 +168,13 @@ nav ul li {
     border-top: 5px solid var(--black);
     margin: 0px;
     font-size: 2em;
+}
+
+
+nav ul li {
+    color: var(--white);
+    text-decoration: none;
+    border-radius: 10px;
 }
 
 nav ul li:hover,
