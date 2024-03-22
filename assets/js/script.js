@@ -82,15 +82,13 @@ function displayDrinkDetails(drinkName) {                                       
 }
 
 // function to handle modal functionality
-const closeModal = document.getElementsByClassName("close")[0];
 function makeModal(data) {
     const modal = document.getElementById("myModal");
-    
+    const closeModal = document.getElementsByClassName("close")[0];
     const randomCocktail = data.drinks[0];
     const cocktailNameElement = document.querySelector('#cocktail-name');
     const cocktailDetailsElement = document.querySelector('#cocktail-details');
     const cocktailImageElement = document.querySelector('#cocktail-image');
-    let cocktailFavoriteButton = document.querySelector('#favorite-button');
     
     cocktailNameElement.textContent = randomCocktail.strDrink;
     cocktailImageElement.src = randomCocktail.strDrinkThumb;
@@ -104,77 +102,10 @@ function makeModal(data) {
     }
     modal.style.display = "block";
 
-    // let isFavorited = favorites.some(favorite => favorite.name === cocktailNameElement);
-    // if (isFavorited) {
-    //   cocktailFavoriteButton.textContent = 'Favorited';
-    // }
-
-    // cocktailFavoriteButton.addEventListener('click', () => {
-    //   debugger;
-    //   if (!isFavorited) {
-    //       favorites.push(cocktailNameElement);
-    //       localStorage.setItem('favorites', JSON.stringify(favorites));
-    //       cocktailFavoriteButton.textContent = 'Favorited';
-    //       isFavorited = true;  // Update the status to favorited
-          
-    //   } else {
-    //       favorites = favorites.filter(favorite => favorite.name !== cocktailNameElement);
-    //       localStorage.setItem('favorites', JSON.stringify(favorites));
-    //       favoriteButton.textContent = 'Favorite';
-    //       isFavorited = false; // Update the status to not favorited
-          
-    //   }
-    // })
-
-    // let isFavorited = favorites.some(favorite => favorite === cocktailNameElement.textContent);
-    // if (!isFavorited) { 
-    //   cocktailFavoriteButton.innerHTML = "favorite";
-    // } else {
-    //   cocktailFavoriteButton.innerHTML = "unfavorite";
-    // }
-    
-    cocktailFavoriteButton.addEventListener('click', function() {
-      event.preventDefault();
-      let isFavorited = favorites.some(favorite => favorite === cocktailNameElement.textContent);
-      if (!isFavorited) {                                                                     // IF the drink is not favorited
-          favorites.push(cocktailNameElement.textContent);                                             // THEN the drink name is added to the favorites array
-          localStorage.setItem('favorites', JSON.stringify(favorites));                       // THEN the favorites array is saved to local storage
-          cocktailFavoriteButton.textContent = 'Unfavorite'; 
-          isFavorited = true;  // Update the status to favorited
-        } else {                                                                              // IF the drink is favorited
-          favorites = favorites.filter(favorite => favorite !== cocktailNameElement.textContent);      // THEN the drink name is removed from the favorites array
-          localStorage.setItem('favorites', JSON.stringify(favorites));                       // THEN the favorites array is saved to local storage
-          cocktailFavoriteButton.textContent = 'Favorite';                                            // THEN the text of the favorites button is changed to say "favorite" instead of "favorited"
-          isFavorited = false; // Update the status to not favorited
-        }
-        renderFavorites();
-    })
+    closeModal.onclick = function() {
+      modal.style.display = "none";
+    }
 }
-closeModal.onclick = function() {
-  modal.style.display = "none";
-}
-
-
-// function displayFavorites() {
-//   const favorites = JSON.parse(localStorage.getItem('favorites')) || [];
-//   const favoritesContainer = document.getElementById('favoriteDrinks'); 
-//   favoritesContainer.innerHTML = ''; 
-
-//   favorites.forEach(cocktail => {
-//     const div = document.createElement('div');
-//     div.classList.add('favorite-drink');
-//     div.innerHTML = `<h3>${cocktail.name}</h3><img src="${cocktail.imageSrc}" alt="${cocktail.name}" style="width: 100px; height: 100px;">`;
-    
-//     const unfavoriteButton = document.createElement('button');
-//     unfavoriteButton.textContent = 'Unfavorite';
-//     unfavoriteButton.addEventListener('click', () => {
-//       removeFavorite(cocktail.name);
-//     });
-    
-//     div.appendChild(unfavoriteButton);
-//     favoritesContainer.appendChild(div);
-//   });
-// }
 
 // displays drinks to the page when a drink name is searched
 const searchButton = document.getElementById('search-button');
