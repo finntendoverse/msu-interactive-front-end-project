@@ -82,9 +82,10 @@ function displayDrinkDetails(drinkName) {                                       
 }
 
 // function to handle modal functionality
+const closeModal = document.getElementsByClassName("close")[0];
 function makeModal(data) {
     const modal = document.getElementById("myModal");
-    const closeModal = document.getElementsByClassName("close")[0];
+    
     const randomCocktail = data.drinks[0];
     const cocktailNameElement = document.querySelector('#cocktail-name');
     const cocktailDetailsElement = document.querySelector('#cocktail-details');
@@ -148,10 +149,9 @@ function makeModal(data) {
         }
         renderFavorites();
     })
-
-    closeModal.onclick = function() {
-      modal.style.display = "none";
-    }
+}
+closeModal.onclick = function() {
+  modal.style.display = "none";
 }
 
 
