@@ -108,8 +108,8 @@ function makeModal(data) {                                                      
     favoriteButton.textContent = 'Favorited';                                               // THEN the button text will be changed to "favorited"
   }
 
-  function handleFavoritesEvent(event) {                                                    
-    handleFavorites(event, cocktailName, favoriteButton);
+  function handleFavoritesEvent(event) {                                                    // THEN the handleFavoritesEvent function is stored in a variable                                          
+    handleFavorites(event, cocktailName, favoriteButton);                                   // THEN the handleFunctionsEvent runs the handleFavorites function
   }
 
   favoriteButton.addEventListener('click', handleFavoritesEvent);                           // THEN the event listener for the favorite button will be added to the modal
@@ -120,23 +120,23 @@ function makeModal(data) {                                                      
   }
 }
 
-function handleFavorites(event, cocktailName, favoriteButton) {
-  event.preventDefault();
-  let isFavorited = favorites.some(favorite => favorite === cocktailName.innerHTML);
-
-  if (!isFavorited) {
-    favorites.push(cocktailName.innerHTML);
-    localStorage.setItem('favorites', JSON.stringify(favorites));
-    favoriteButton.textContent = 'Favorited';
-    isFavorited = true;
-  } else {
-    favorites = favorites.filter(favorite => favorite !== cocktailName.innerHTML);
-    localStorage.setItem('favorites', JSON.stringify(favorites));
-    favoriteButton.textContent = 'Favorite';
-    isFavorited = false;                                                                    //
+// function to handle the button functionality within the modals
+function handleFavorites(event, cocktailName, favoriteButton) {                             // WHEN the handleFavorites function is called
+  event.preventDefault();                                                                   // THEN the page does not refresh
+  
+  let isFavorited = favorites.some(favorite => favorite === cocktailName.innerHTML);        // THEN the favorites are referenced
+  if (!isFavorited) {                                                                       // IF the drink is not favorited
+    favorites.push(cocktailName.innerHTML);                                                 // THEN it is added to the favorites array
+    localStorage.setItem('favorites', JSON.stringify(favorites));                           // THEN the favorites are updated in local storage
+    favoriteButton.textContent = 'Favorited';                                               // THEN the button text is changed to "favorited"
+    isFavorited = true;                                                                     // THEN the status is set to favorited
+  } else {                                                                                  // IF the drink is favorited
+    favorites = favorites.filter(favorite => favorite !== cocktailName.innerHTML);          // THEN it is removed from the favorites array
+    localStorage.setItem('favorites', JSON.stringify(favorites));                           // THEN the favorites are updated in local storage
+    favoriteButton.textContent = 'Favorite';                                                // THEN the button text is changed to "favorite"
+    isFavorited = false;                                                                    // THEN the status is set to not favorited
   }
-
-  renderFavorites();                                                                        // THEN the favorites will be rendered to thr page
+  renderFavorites();                                                                        // THEN the favorites are rendered to the page
 }
 
 // displays drinks to the page when a drink name is searched
@@ -152,6 +152,19 @@ searchButton.addEventListener('click', function() {                             
     .catch(error => {                                                                 // IF the fetch is unsuccessful
       console.error('Error fetching cocktail data:', error);                          // THEN an error is displayed in the console
     });
+});
+
+// displays random drink in a modal when the "I'm feeling adventurous button is clicked
+const randomButton = document.querySelector('#randomBtn');
+randomButton.addEventListener('click', function() {                       // WHEN the "I'm feeling adventurous" button is clicked
+  fetch('https://www.thecocktaildb.com/api/json/v1/1/random.php')         // The random API is fetched
+  .then(res => res.json())
+  .then(data => {                                                         // IF the fetch is successful
+    makeModal(data)                                                       // THEN a modal with the drink details is shown
+  })
+  .catch(error => {                                                       // IF the fetch is unsuccessful
+    console.error('Error fetching cocktail data:', error);                // THEN an error is displayed in the console
+  });
 });
 
 // displays drinks with vodka to the page when the "vodka" button is clicked
@@ -218,17 +231,3 @@ tequilaButton.addEventListener('click', function() {                          //
       console.error('Error fetching cocktail data:', error);                  // THEN an error is displayed in the console
     });
 })
-
-// displays random drink in a modal when the "I'm feeling adventurous button is clicked
-const randomButton = document.querySelector('#randomBtn');
-randomButton.addEventListener('click', function() {                       // WHEN the "I'm feeling adventurous" button is clicked
-  fetch('https://www.thecocktaildb.com/api/json/v1/1/random.php')         // The random API is fetched
-  .then(res => res.json())
-  .then(data => {                                                         // IF the fetch is successful
-    makeModal(data)                                                       // THEN a modal with the drink details is shown
-  })
-  .catch(error => {                                                       // IF the fetch is unsuccessful
-    console.error('Error fetching cocktail data:', error);                // THEN an error is displayed in the console
-  });
-});
-
