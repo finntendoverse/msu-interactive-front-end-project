@@ -26,7 +26,7 @@ function renderDrinks(data) {                                                   
 
     const favoriteButton = document.createElement('button');                                  // THEN a button element is created
     favoriteButton.textContent = 'Favorite';                                                  // THEN the text content of the button becomes "favorite"
-    const isFavorited = favorites.some(favorite => favorite === cocktailName.innerHTML);      // THEN all the favorited drinks are checked
+    let isFavorited = favorites.some(favorite => favorite === cocktailName.innerHTML);      // THEN all the favorited drinks are checked
     if (isFavorited) {                                                                        // IF the drink is already favorited
       favoriteButton.textContent = 'Favorited';                                               // THEN the text reads "favorited" instead of "favorite"
     }
@@ -83,30 +83,72 @@ function displayDrinkDetails(drinkName) {                                       
 
 // function to handle modal functionality
 function makeModal(data) {
-    const modal = document.getElementById("myModal");
-    const closeModal = document.getElementsByClassName("close")[0];
-    const randomCocktail = data.drinks[0];
-    const cocktailNameElement = document.querySelector('#cocktail-name');
-    const cocktailDetailsElement = document.querySelector('#cocktail-details');
-    const cocktailImageElement = document.querySelector('#cocktail-image');
-    
-    cocktailNameElement.textContent = randomCocktail.strDrink;
-    cocktailImageElement.src = randomCocktail.strDrinkThumb;
-    cocktailImageElement.innerHTML = '';
-    cocktailDetailsElement.innerHTML = '';
+  let modal = document.getElementById("myModal");
+  let closeModal = document.getElementsByClassName("close")[0];  
+  let drink = data.drinks[0];
+  let cocktailName = document.querySelector('#cocktail-name');
+  let cocktailDetails = document.querySelector('#cocktail-details');
+  let cocktailImg = document.querySelector('#cocktail-image');
+  
+  cocktailName.textContent = drink.strDrink;
+  cocktailImg.src = drink.strDrinkThumb;
+  cocktailDetails.innerHTML = '';
 
-    for (const [key, value] of Object.entries(randomCocktail)) {
-      if (key.includes('strIngredient') && value) {
-        cocktailDetailsElement.innerHTML += `<li>${value}</li>`;
-      }
+  for (const [key, value] of Object.entries(drink)) {
+    if (key.includes('strIngredient') && value) {
+      cocktailDetails.innerHTML += `<li>${value}</li>`;
     }
-    modal.style.display = "block";
+  }
+  modal.style.display = "block";
 
-    closeModal.onclick = function() {
-      modal.style.display = "none";
-    }
+  let isFavorited = favorites.some(favorite => favorite === cocktailName.innerHTML);      // THEN all the favorited drinks are checked
+  if (isFavorited) {                                                                        // IF the drink is already favorited
+    favoriteButton.textContent = 'Favorited';                                               // THEN the text reads "favorited" instead of "favorite"
+  }                           
+
+  favoriteButton.addEventListener('click', function(event) {
+    handleFavorites(event, cocktailName, favoriteButton);
+  })
+
+  closeModal.onclick = function() {
+    favoriteButton.removeEventListener('click', handleFavorites);
+    modal.style.display = "none";
+  }
 }
 
+let favoriteButton = document.querySelector('#favoriteBtn');
+
+function handleFavorites(event, cocktailName, favoriteButton) {                                     // WHEN the favorite button is clicked
+  event.preventDefault();
+  const isFavorited = favorites.some(favorite => favorite === cocktailName.innerHTML);    // THEN all the favorited drinks are checked
+  if (!isFavorited) {                                                                     // IF the drink is not favorited
+    favorites.push(cocktailName.innerHTML);                                             // THEN the drink name is added to the favorites array
+    localStorage.setItem('favorites', JSON.stringify(favorites));                       // THEN the favorites array is saved to local storage
+    favoriteButton.textContent = 'Favorited';                                           // THEN the text of the favorites button is changed to say "favorited" instead of "favorite"
+  } else {                                                                              // IF the drink is favorited
+    favorites = favorites.filter(favorite => favorite !== cocktailName.innerHTML);      // THEN the drink name is removed from the favorites array
+    localStorage.setItem('favorites', JSON.stringify(favorites));                       // THEN the favorites array is saved to local storage
+    favoriteButton.textContent = 'Favorite';                                            // THEN the text of the favorites button is changed to say "favorite" instead of "favorited"
+  }
+  renderFavorites();
+}
+
+// let favoriteButton = document.querySelector('#favoriteBtn')
+// favoriteButton.addEventListener('click', function(cocktailName) {                                     // WHEN the favorite button is clicked
+//   event.preventDefault();
+//   const isFavorited = favorites.some(favorite => favorite === cocktailName.innerHTML);    // THEN all the favorited drinks are checked
+//   if (!isFavorited) {                                                                     // IF the drink is not favorited
+//       favorites.push(cocktailName.innerHTML);                                             // THEN the drink name is added to the favorites array
+//       localStorage.setItem('favorites', JSON.stringify(favorites));                       // THEN the favorites array is saved to local storage
+//       favoriteButton.textContent = 'Favorited';                                           // THEN the text of the favorites button is changed to say "favorited" instead of "favorite"
+      
+//     } else {                                                                              // IF the drink is favorited
+//       favorites = favorites.filter(favorite => favorite !== cocktailName.innerHTML);      // THEN the drink name is removed from the favorites array
+//       localStorage.setItem('favorites', JSON.stringify(favorites));                       // THEN the favorites array is saved to local storage
+//       favoriteButton.textContent = 'Favorite';                                            // THEN the text of the favorites button is changed to say "favorite" instead of "favorited"
+//   }
+//   renderFavorites();
+// })
 
 // displays drinks to the page when a drink name is searched
 const searchButton = document.getElementById('search-button');
