@@ -159,7 +159,7 @@ function displayDrinkDetails(drinkName) {
   fetch(apiUrl)
       .then(response => response.json())
       .then(data => {
-          const drink = data.drinks[0];
+          let drink = data.drinks[0];
           if (drink) {
               const loadedInfo = document.getElementById('loadedInfo');
               loadedInfo.innerHTML = ''; // Clear previous content
@@ -301,6 +301,7 @@ function getRandomCocktail() {
     const cocktailNameElement = document.querySelector('#cocktail-name');
     const cocktailDetailsElement = document.querySelector('#cocktail-details');
     const cocktailImageElement = document.querySelector('#cocktail-image');
+    const favoriteButton = document.querySelector('#favoriteBtn')
     
     if (randomCocktail && cocktailNameElement && cocktailImageElement && cocktailDetailsElement) {
       cocktailNameElement.textContent = randomCocktail.strDrink;
@@ -385,9 +386,11 @@ function displayFavorites() {
 
 function removeFavorite(cocktailName) {
   let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+  
   favorites = favorites.filter(cocktail => cocktail.name !== cocktailName);
   localStorage.setItem('favorites', JSON.stringify(favorites));
   displayFavorites();
+  console.log(favorites)
 }
 
 document.addEventListener('DOMContentLoaded', function() {
