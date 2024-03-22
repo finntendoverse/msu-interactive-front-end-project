@@ -104,7 +104,6 @@ function makeModal(data) {
     }
     modal.style.display = "block";
 
-    const isFavorited = favorites.some(favorite => favorite === cocktailNameElement.textContent);    // THEN all the favorited drinks are checked
     cocktailFavoriteButton.addEventListener('click', function() {                                     // WHEN the favorite button is clicked
       event.preventDefault();
       const isFavorited = favorites.some(favorite => favorite === cocktailNameElement.textContent);
