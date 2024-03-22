@@ -220,6 +220,18 @@ h3 {
     background-color: var(--blue);
 }
 
+#favoriteBtn {
+    display: block;
+    margin: 0 auto;
+    width: 90%;
+    color: white;
+    font-size: 1em;
+    font-family: var(--secondary-font);
+    color: var(--white);
+    border: 1px solid var(--white);
+    background-color: var(--blue);
+}
+
 @media (max-width: 1090px) {
     .search-bar {
         top: 100px;
