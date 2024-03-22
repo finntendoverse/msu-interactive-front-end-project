@@ -103,6 +103,8 @@ function makeModal(data) {                                                      
 
   modal.style.display = "block";                                                            // THEN the modal is displayed on the page
 
+  favoriteButton.textContent = 'favorite'
+  
   let isFavorited = favorites.some(favorite => favorite === cocktailName.innerHTML);        // THEN the favorites are checked
   if (isFavorited) {                                                                        // IF the drink is already favorited
     favoriteButton.textContent = 'Favorited';                                               // THEN the button text will be changed to "favorited"
