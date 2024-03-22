@@ -45,6 +45,55 @@
     margin: 0px;
 }
 
+#loadedInfo {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+#loadedInfo img {
+    max-width: 100%;
+    display: block;
+    margin-bottom: 20px;
+    border-radius: 10px;
+}
+
+#loadedInfo ul {
+    margin: 0;
+    padding: 20px;
+    list-style-type: none;
+    border-radius: 10px;
+    overflow: hidden; 
+}
+
+#loadedInfo ul li {
+    font-size: 16px;
+    color: #fff;
+    background-color: var(--purple); 
+    padding: 10px; 
+    border-radius: 5px; 
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+}
+
+#loadedInfo ul li:before {
+    content: "•";
+    color: var(--blue);
+    margin-right: 10px;
+}
+
+#loadedInfo ul li:last-child {
+    margin-bottom: 0;
+}
+
+#loadedInfo ul li span {
+    display: inline-block;
+    max-width: calc(100% - 20px); 
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
 #cocktail-name,
 .close,
 #cocktail-details,
