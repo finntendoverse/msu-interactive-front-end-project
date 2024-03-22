@@ -110,7 +110,10 @@ function makeModal(data) {
       cocktailFavoriteButton.innerHTML = "unfavorite";
     }
     
-    cocktailFavoriteButton.addEventListener('click', modalFavoriteButton(cocktailFavoriteButton, cocktailNameElement));                                    // WHEN the favorite button is clicked
+    cocktailFavoriteButton.onclick = function() {
+      event.preventDefault();
+      toggleFavorite(randomCocktail);
+    };                                 // WHEN the favorite button is clicked
 
     closeModal.onclick = function() {
       modal.style.display = "none";
