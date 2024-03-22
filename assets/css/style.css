@@ -152,11 +152,14 @@ nav ul li {
     border-top: 5px solid var(--black);
     margin: 0px;
     font-size: 2em;
+    border-radius: 10px;
 }
 
 nav ul li:hover,
 #favorites-section p:hover {
     cursor: pointer;
+    transform: scale(1.02);
+    background-color: rgb(80, 3, 150);
 }
 
 main {
