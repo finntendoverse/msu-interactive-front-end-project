@@ -102,25 +102,49 @@ function makeModal(data) {
       }
     }
     modal.style.display = "block";
-    const isFavorited = favorites.some(favorite => favorite === cocktailNameElement.textContent);
-    if (!isFavorited) { 
-      cocktailFavoriteButton.innerHTML = "favorite";
-    } else {
-      cocktailFavoriteButton.innerHTML = "unfavorite";
-    }
+
+    // let isFavorited = favorites.some(favorite => favorite.name === cocktailNameElement);
+    // if (isFavorited) {
+    //   cocktailFavoriteButton.textContent = 'Favorited';
+    // }
+
+    // cocktailFavoriteButton.addEventListener('click', () => {
+    //   debugger;
+    //   if (!isFavorited) {
+    //       favorites.push(cocktailNameElement);
+    //       localStorage.setItem('favorites', JSON.stringify(favorites));
+    //       cocktailFavoriteButton.textContent = 'Favorited';
+    //       isFavorited = true;  // Update the status to favorited
+          
+    //   } else {
+    //       favorites = favorites.filter(favorite => favorite.name !== cocktailNameElement);
+    //       localStorage.setItem('favorites', JSON.stringify(favorites));
+    //       favoriteButton.textContent = 'Favorite';
+    //       isFavorited = false; // Update the status to not favorited
+          
+    //   }
+    // })
+
+    // let isFavorited = favorites.some(favorite => favorite === cocktailNameElement.textContent);
+    // if (!isFavorited) { 
+    //   cocktailFavoriteButton.innerHTML = "favorite";
+    // } else {
+    //   cocktailFavoriteButton.innerHTML = "unfavorite";
+    // }
     
     cocktailFavoriteButton.addEventListener('click', function() {
-      debugger;
       event.preventDefault();
-      const isFavorited = favorites.some(favorite => favorite === cocktailNameElement.textContent);
+      let isFavorited = favorites.some(favorite => favorite === cocktailNameElement.textContent);
       if (!isFavorited) {                                                                     // IF the drink is not favorited
           favorites.push(cocktailNameElement.textContent);                                             // THEN the drink name is added to the favorites array
           localStorage.setItem('favorites', JSON.stringify(favorites));                       // THEN the favorites array is saved to local storage
           cocktailFavoriteButton.textContent = 'Unfavorite'; 
+          isFavorited = true;  // Update the status to favorited
         } else {                                                                              // IF the drink is favorited
           favorites = favorites.filter(favorite => favorite !== cocktailNameElement.textContent);      // THEN the drink name is removed from the favorites array
           localStorage.setItem('favorites', JSON.stringify(favorites));                       // THEN the favorites array is saved to local storage
           cocktailFavoriteButton.textContent = 'Favorite';                                            // THEN the text of the favorites button is changed to say "favorite" instead of "favorited"
+          isFavorited = false; // Update the status to not favorited
         }
         renderFavorites();
     })
