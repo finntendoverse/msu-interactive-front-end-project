@@ -103,38 +103,54 @@ function makeModal(data) {
     }
     modal.style.display = "block";
     const isFavorited = favorites.some(favorite => favorite === cocktailNameElement.textContent);
-    debugger;
     if (!isFavorited) { 
       cocktailFavoriteButton.innerHTML = "favorite";
     } else {
       cocktailFavoriteButton.innerHTML = "unfavorite";
     }
     
-    cocktailFavoriteButton.onclick = function() {
+    cocktailFavoriteButton.addEventListener('click', function() {
+      debugger;
       event.preventDefault();
-      toggleFavorite(randomCocktail);
-    };                                 // WHEN the favorite button is clicked
+      const isFavorited = favorites.some(favorite => favorite === cocktailNameElement.textContent);
+      if (!isFavorited) {                                                                     // IF the drink is not favorited
+          favorites.push(cocktailNameElement.textContent);                                             // THEN the drink name is added to the favorites array
+          localStorage.setItem('favorites', JSON.stringify(favorites));                       // THEN the favorites array is saved to local storage
+          cocktailFavoriteButton.textContent = 'Unfavorite'; 
+        } else {                                                                              // IF the drink is favorited
+          favorites = favorites.filter(favorite => favorite !== cocktailNameElement.textContent);      // THEN the drink name is removed from the favorites array
+          localStorage.setItem('favorites', JSON.stringify(favorites));                       // THEN the favorites array is saved to local storage
+          cocktailFavoriteButton.textContent = 'Favorite';                                            // THEN the text of the favorites button is changed to say "favorite" instead of "favorited"
+        }
+        renderFavorites();
+    })
 
     closeModal.onclick = function() {
       modal.style.display = "none";
-      cocktailFavoriteButton.removeEventListener('click', modalFavoriteButton());
     }
 }
 
-function modalFavoriteButton(cocktailFavoriteButton, cocktailNameElement) {
-  // event.preventDefault();
-  const isFavorited = favorites.some(favorite => favorite === cocktailNameElement.textContent);
-  if (!isFavorited) {                                                                     // IF the drink is not favorited
-      favorites.push(cocktailNameElement.textContent);                                             // THEN the drink name is added to the favorites array
-      localStorage.setItem('favorites', JSON.stringify(favorites));                       // THEN the favorites array is saved to local storage
-      cocktailFavoriteButton.textContent = 'Unfavorite'; 
-    } else {                                                                              // IF the drink is favorited
-      favorites = favorites.filter(favorite => favorite !== cocktailNameElement.textContent);      // THEN the drink name is removed from the favorites array
-      localStorage.setItem('favorites', JSON.stringify(favorites));                       // THEN the favorites array is saved to local storage
-      cocktailFavoriteButton.textContent = 'Favorite';                                            // THEN the text of the favorites button is changed to say "favorite" instead of "favorited"
-    }
-    renderFavorites();
-}
+
+// function displayFavorites() {
+//   const favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+//   const favoritesContainer = document.getElementById('favoriteDrinks'); 
+//   favoritesContainer.innerHTML = ''; 
+
+//   favorites.forEach(cocktail => {
+//     const div = document.createElement('div');
+//     div.classList.add('favorite-drink');
+//     div.innerHTML = `<h3>${cocktail.name}</h3><img src="${cocktail.imageSrc}" alt="${cocktail.name}" style="width: 100px; height: 100px;">`;
+    
+//     const unfavoriteButton = document.createElement('button');
+//     unfavoriteButton.textContent = 'Unfavorite';
+//     unfavoriteButton.addEventListener('click', () => {
+//       removeFavorite(cocktail.name);
+//     });
+    
+//     div.appendChild(unfavoriteButton);
+//     favoritesContainer.appendChild(div);
+//   });
+// }
 
 // displays drinks to the page when a drink name is searched
 const searchButton = document.getElementById('search-button');
