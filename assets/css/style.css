@@ -225,12 +225,15 @@ h3 {
     }
     
     #randomBtn {
-        display: block;
-        width: 90vw;
-        top: 160px;
-        margin: 0 auto;
-        left: 0;
-        right: 0;
+        font-family: var(--secondary-font);
+        font-size: 1em;
+        position: absolute;
+        right: 30px;
+        top: 30px;
+        color: var(--white);
+        border: 1px solid var(--white);
+        background-color: var(--blue);
+        animation: bounce 0.5s infinite alternate;
     }
     
     header {
