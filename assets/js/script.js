@@ -76,15 +76,21 @@ function displayDrinkDetails(drinkName) {                                       
     .then(data => {
       const drink = data.drinks[0];
       if (drink) {
-    
-        const modal = document.getElementById("myModal");
-        const cocktailNameElement = document.querySelector('#cocktail-name');
-        const cocktailImageElement = document.querySelector('#cocktail-image');
-        if (cocktailNameElement && cocktailImageElement) {
-          cocktailNameElement.textContent = drink.strDrink;
-          cocktailImageElement.src = drink.strDrinkThumb;
-          modal.style.display = "block"; // Show the modal
-        }
+       makeModal(data);
+       
+        // const modal = document.getElementById("myModal");
+        // const closeModal = document.getElementsByClassName("close")[0];
+        // const cocktailNameElement = document.querySelector('#cocktail-name');
+        // const cocktailImageElement = document.querySelector('#cocktail-image');
+        // if (cocktailNameElement && cocktailImageElement) {
+        //   cocktailNameElement.textContent = drink.strDrink;
+        //   cocktailImageElement.src = drink.strDrinkThumb;
+        //   modal.style.display = "block"; // Show the modal
+        // }
+
+        // closeModal.onclick = function() {
+        //   modal.style.display = "none";
+        // }
       } else {
         console.error('Drink details not found.');
       }
@@ -170,21 +176,30 @@ let tequilaButton = document.querySelector('#tequila');
 tequilaButton.addEventListener('click', function() {                          // WHEN the "bourbon" text is clicked
   fetch('https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=Tequila')   // THEN the ingredient is searched in the API
     .then(response => response.json())
-    .then(data => {
+    .then(data => {                                                           // IF the fetch is successful
       renderDrinks(data);                                                     // THEN the drinks are rendered onto the page
     })
-    .catch(error => {
+    .catch(error => {                                                         // IF
       console.error('Error fetching cocktail data:', error);
     });
 })
 
 
 // displays random drink in a modal when the "I'm feeling adventurous button is clicked
-randomButton.addEventListener('click', function() {
-  fetch('https://www.thecocktaildb.com/api/json/v1/1/random.php')
+randomButton.addEventListener('click', function() {                       // WHEN the "I'm feeling adventurous" button is clicked
+  fetch('https://www.thecocktaildb.com/api/json/v1/1/random.php')         // The random API is fetched
   .then(res => res.json())
-  .then(data => {
-    const modal = document.getElementById("myModal");
+  .then(data => {                                                         // IF the fetch is successful
+    makeModal(data)                                                       // THEN a modal with the drink details is shown
+  })
+  .catch(error => {                                                       // IF the fetch is unsuccessful
+    console.error('Error fetching cocktail data:', error);                // THEN an error is displayed in the console
+  });
+});
+
+// function to handle modal functionality
+function makeModal(data) {
+  const modal = document.getElementById("myModal");
     const closeModal = document.getElementsByClassName("close")[0];
     const randomCocktail = data.drinks[0];
     const cocktailNameElement = document.querySelector('#cocktail-name');
@@ -208,8 +223,10 @@ randomButton.addEventListener('click', function() {
         modal.style.display = "none";
       }
     }
-  })
-  .catch(error => {
-    console.error('Error fetching cocktail data:', error);
-  });
-});
+}
+
+// window.onclick = function(event) {
+//   if (event.target == modal) {
+//     modal.style.display = "none";
+//   }
+// }
