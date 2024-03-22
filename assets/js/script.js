@@ -81,49 +81,49 @@ function displayDrinkDetails(drinkName) {                                       
     });
 }
 
-// // function to handle modal functionality
-function makeModal(data) {
-  let modal = document.getElementById("myModal");
-  let closeModal = document.getElementsByClassName("close")[0];
-  let drink = data.drinks[0];
-  let cocktailName = document.querySelector('#cocktail-name');
-  let cocktailDetails = document.querySelector('#cocktail-details');
-  let cocktailImg = document.querySelector('#cocktail-image');
-  let favoriteButton = document.querySelector('#favoriteBtn');
+// function to handle modal functionality
+function makeModal(data) {                                                                  // WHEN the makeModal function is called
+  let modal = document.getElementById("myModal");                                           // THEN the modal element is referenced
+  let closeModal = document.getElementsByClassName("close")[0];                             // THEN the closeModal button is referenced
+  let drink = data.drinks[0];                                                               // THEN the drink is stored in a variable
+  let cocktailName = document.querySelector('#cocktail-name');                              // THEN the cocktailName element is stored in a variable
+  let cocktailDetails = document.querySelector('#cocktail-details');                        // THEN the cocktailDetails element is stored in a variable
+  let cocktailImg = document.querySelector('#cocktail-image');                              // THEN the cocktailImg element is stored in a variable
+  let favoriteButton = document.querySelector('#favoriteBtn');                              // THEN the favorite button is referenced
 
-  cocktailName.textContent = drink.strDrink;
-  cocktailImg.src = drink.strDrinkThumb;
-  cocktailDetails.innerHTML = '';
+  cocktailName.textContent = drink.strDrink;                                                // THEN the name becomes the drink's name
+  cocktailImg.src = drink.strDrinkThumb;                                                    // THEN the image becomes the drink's image
+  cocktailDetails.innerHTML = '';                                                           // THEN the former ingredients are removed
 
-  for (let [key, value] of Object.entries(drink)) {
-    if (key.includes('strIngredient') && value) {
-      cocktailDetails.innerHTML += `<li>${value}</li>`;
+  for (let [key, value] of Object.entries(drink)) {                                         // FOR the drink object array of its key-value pairs
+    if (key.includes('strIngredient') && value) {                                           // IF the key includes the strIngredient
+      cocktailDetails.innerHTML += `<li>${value}</li>`;                                     // THEN the ingredients are added as a list
     }
   }
 
-  modal.style.display = "block";
+  modal.style.display = "block";                                                            // THEN the modal is displayed on the page
 
-  let isFavorited = favorites.some(favorite => favorite === cocktailName.innerHTML);
-  if (isFavorited) {
-    favoriteButton.textContent = 'Favorited';
+  let isFavorited = favorites.some(favorite => favorite === cocktailName.innerHTML);        // THEN the favorites are checked
+  if (isFavorited) {                                                                        // IF the drink is already favorited
+    favoriteButton.textContent = 'Favorited';                                               // THEN the button text will be changed to "favorited"
   }
 
-  function handleFavoritesEvent(event) {
+  function handleFavoritesEvent(event) {                                                    
     handleFavorites(event, cocktailName, favoriteButton);
   }
 
-  favoriteButton.addEventListener('click', handleFavoritesEvent);
+  favoriteButton.addEventListener('click', handleFavoritesEvent);                           // THEN the event listener for the favorite button will be added to the modal
 
-  closeModal.onclick = function() {
-    favoriteButton.removeEventListener('click', handleFavoritesEvent);
-    modal.style.display = "none";
+  closeModal.onclick = function() {                                                         // WHEN the modal is closed
+    favoriteButton.removeEventListener('click', handleFavoritesEvent);                      // THEN the event listener for the favorite button will be removed from the modal
+    modal.style.display = "none";                                                           // THEN the modal is removed from the page
   }
 }
 
-// function to handle the favorite functionality within the modals
 function handleFavorites(event, cocktailName, favoriteButton) {
   event.preventDefault();
   let isFavorited = favorites.some(favorite => favorite === cocktailName.innerHTML);
+
   if (!isFavorited) {
     favorites.push(cocktailName.innerHTML);
     localStorage.setItem('favorites', JSON.stringify(favorites));
@@ -133,9 +133,10 @@ function handleFavorites(event, cocktailName, favoriteButton) {
     favorites = favorites.filter(favorite => favorite !== cocktailName.innerHTML);
     localStorage.setItem('favorites', JSON.stringify(favorites));
     favoriteButton.textContent = 'Favorite';
-    isFavorited = false;
+    isFavorited = false;                                                                    //
   }
-  renderFavorites();
+
+  renderFavorites();                                                                        // THEN the favorites will be rendered to thr page
 }
 
 // displays drinks to the page when a drink name is searched
