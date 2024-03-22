@@ -365,20 +365,29 @@ function saveFavoriteCocktail(cocktail) {
 function displayFavorites() {
   const favorites = JSON.parse(localStorage.getItem('favorites')) || [];
   const favoritesContainer = document.getElementById('favoriteDrinks'); 
-  console.log(favorites)
   favoritesContainer.innerHTML = ''; 
 
   favorites.forEach(cocktail => {
     const div = document.createElement('div');
     div.classList.add('favorite-drink');
     div.innerHTML = `<h3>${cocktail.name}</h3><img src="${cocktail.imageSrc}" alt="${cocktail.name}" style="width: 100px; height: 100px;">`;
-    favoritesContainer.appendChild(div);
-
     
-   
+    const unfavoriteButton = document.createElement('button');
+    unfavoriteButton.textContent = 'Unfavorite';
+    unfavoriteButton.addEventListener('click', () => {
+      removeFavorite(cocktail.name);
+    });
+    
+    div.appendChild(unfavoriteButton);
+    favoritesContainer.appendChild(div);
   });
-  
- 
+}
+
+function removeFavorite(cocktailName) {
+  let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+  favorites = favorites.filter(cocktail => cocktail.name !== cocktailName);
+  localStorage.setItem('favorites', JSON.stringify(favorites));
+  displayFavorites();
 }
 
 document.addEventListener('DOMContentLoaded', function() {
