@@ -166,43 +166,38 @@ function renderFavorites() {
       favoriteDrinksSection.appendChild(favoriteDrink);
     }
   }
-
   
 }
-
 
 function displayDrinkDetails(drinkName) {
   // Fetch details of the clicked drink by its name
   let apiUrl = `https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${drinkName}`;
   fetch(apiUrl)
-      .then(response => response.json())
-      .then(data => {
-          const drink = data.drinks[0];
-          if (drink) {
-              const loadedInfo = document.getElementById('loadedInfo');
-              loadedInfo.innerHTML = ''; // Clear previous content
-
+   .then(response => response.json())
+   .then(data => {
+    const drink = data.drinks[0];
+    if (drink) {
+    const loadedInfo = document.getElementById('loadedInfo');
+    loadedInfo.innerHTML = ''; // Clear previous content
               // Create elements to display drink details
-              const cocktailNameElement = document.createElement('h3');
-              cocktailNameElement.textContent = drink.strDrink;
-
-              const cocktailImageElement = document.createElement('img');
-              cocktailImageElement.src = drink.strDrinkThumb;
-              cocktailImageElement.alt = drink.strDrink;
-
-              const ingredientsList = document.createElement('ul');
+    const cocktailNameElement = document.createElement('h3');
+    cocktailNameElement.textContent = drink.strDrink;
+    const cocktailImageElement = document.createElement('img');
+    cocktailImageElement.src = drink.strDrinkThumb;
+    cocktailImageElement.alt = drink.strDrink;
+    const ingredientsList = document.createElement('ul');
               // Loop through the ingredients and add them to the list
-              for (let i = 1; i <= 15; i++) { // Assuming there are maximum 15 ingredients
-                  const ingredient = drink[`strIngredient${i}`];
-                  const measure = drink[`strMeasure${i}`];
-                  if (ingredient) {
-                      const listItem = document.createElement('li');
-                      listItem.textContent = `${ingredient} - ${measure}`;
-                      ingredientsList.appendChild(listItem);
-                  } else {
-                      break; // No more ingredients
-                  }
-              }
+    for (let i = 1; i <= 15; i++) { // Assuming there are maximum 15 ingredients
+    const ingredient = drink[`strIngredient${i}`];
+    const measure = drink[`strMeasure${i}`];
+    if (ingredient) {
+    const listItem = document.createElement('li');
+    listItem.textContent = `${ingredient} - ${measure}`;
+    ingredientsList.appendChild(listItem);
+     } else {
+           break; // No more ingredients
+     }
+      }
 
               // Append elements to loaded-info section
               loadedInfo.appendChild(cocktailNameElement);
