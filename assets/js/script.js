@@ -1,6 +1,6 @@
 // global variables
 const loadedInfo = document.querySelector('#loadedInfo');
-const favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
 const randomButton = document.querySelector('#randomBtn');
 
 // displays the saved favorites when the page is loaded
