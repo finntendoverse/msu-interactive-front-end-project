@@ -89,25 +89,61 @@ function makeModal(data) {
     const cocktailNameElement = document.querySelector('#cocktail-name');
     const cocktailDetailsElement = document.querySelector('#cocktail-details');
     const cocktailImageElement = document.querySelector('#cocktail-image');
+    let cocktailFavoriteButton = document.querySelector('#favorite-button');
     
-    if (randomCocktail && cocktailNameElement && cocktailImageElement && cocktailDetailsElement) {
-      cocktailNameElement.textContent = randomCocktail.strDrink;
-      cocktailImageElement.src = randomCocktail.strDrinkThumb;
-      cocktailImageElement.innerHTML = '';
-      cocktailDetailsElement.innerHTML = '';
-      
-      for (const [key, value] of Object.entries(randomCocktail)) {
-        if (key.includes('strIngredient') && value) {
-          cocktailDetailsElement.innerHTML += `<li>${value}</li>`;
-        }
-      }
-      modal.style.display = "block";
+    cocktailNameElement.textContent = randomCocktail.strDrink;
+    cocktailImageElement.src = randomCocktail.strDrinkThumb;
+    cocktailImageElement.innerHTML = '';
+    cocktailDetailsElement.innerHTML = '';
+    cocktailFavoriteButton.innerHTML = "favorite";
 
-      closeModal.onclick = function() {
-        modal.style.display = "none";
+    for (const [key, value] of Object.entries(randomCocktail)) {
+      if (key.includes('strIngredient') && value) {
+        cocktailDetailsElement.innerHTML += `<li>${value}</li>`;
       }
     }
+    modal.style.display = "block";
+
+    const isFavorited = favorites.some(favorite => favorite === cocktailNameElement.textContent);    // THEN all the favorited drinks are checked
+    cocktailFavoriteButton.addEventListener('click', function() {                                     // WHEN the favorite button is clicked
+      event.preventDefault();
+      const isFavorited = favorites.some(favorite => favorite === cocktailNameElement.textContent);
+      if (!isFavorited) {                                                                     // IF the drink is not favorited
+          favorites.push(cocktailNameElement.textContent);                                             // THEN the drink name is added to the favorites array
+          localStorage.setItem('favorites', JSON.stringify(favorites));                       // THEN the favorites array is saved to local storage
+          cocktailFavoriteButton.textContent = 'Unfavorite'; 
+        } else {                                                                              // IF the drink is favorited
+          favorites = favorites.filter(favorite => favorite !== cocktailNameElement.textContent);      // THEN the drink name is removed from the favorites array
+          localStorage.setItem('favorites', JSON.stringify(favorites));                       // THEN the favorites array is saved to local storage
+          cocktailFavoriteButton.textContent = 'Favorite';                                            // THEN the text of the favorites button is changed to say "favorite" instead of "favorited"
+        }
+        renderFavorites();
+    })
+    closeModal.onclick = function() {
+      modal.style.display = "none";
+    }
 }
+
+// function displayFavorites() {
+//   const favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+//   const favoritesContainer = document.getElementById('favoriteDrinks'); 
+//   favoritesContainer.innerHTML = ''; 
+
+//   favorites.forEach(cocktail => {
+//     const div = document.createElement('div');
+//     div.classList.add('favorite-drink');
+//     div.innerHTML = `<h3>${cocktail.name}</h3><img src="${cocktail.imageSrc}" alt="${cocktail.name}" style="width: 100px; height: 100px;">`;
+    
+//     const unfavoriteButton = document.createElement('button');
+//     unfavoriteButton.textContent = 'Unfavorite';
+//     unfavoriteButton.addEventListener('click', () => {
+//       removeFavorite(cocktail.name);
+//     });
+    
+//     div.appendChild(unfavoriteButton);
+//     favoritesContainer.appendChild(div);
+//   });
+// }
 
 // displays drinks to the page when a drink name is searched
 const searchButton = document.getElementById('search-button');
@@ -201,3 +237,4 @@ randomButton.addEventListener('click', function() {                       // WHE
     console.error('Error fetching cocktail data:', error);                // THEN an error is displayed in the console
   });
 });
+
