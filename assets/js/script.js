@@ -107,6 +107,7 @@ function makeModal(data) {
     }
 }
 
+
 // displays drinks to the page when a drink name is searched
 const searchButton = document.getElementById('search-button');
 searchButton.addEventListener('click', function() {                                   // WHEN the search button is clicked
