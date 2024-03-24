@@ -154,10 +154,6 @@ function handleFavorites(event, cocktailName, favoriteButton) {                 
   renderFavorites();                                                                        // THEN the favorites are rendered to the page
 }
 
-// function to update favorite buttons already on the page when a drink is updated in favorites
-// function updatePageButtons() {
-// }
-
 // displays drinks to the page when a drink name is searched
 let searchButton = document.getElementById('search-button');
 searchButton.addEventListener('click', function() {                                   // WHEN the search button is clicked
