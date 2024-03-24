@@ -201,7 +201,6 @@ h1 {
     left: 30px;
     top: 30px;
     font-family: var(--secondary-font)
-    
 }
 
 #search-button {
@@ -267,6 +266,7 @@ nav ul li {
     border-top: 5px solid var(--black);
     margin: 0px;
     font-size: 2em;
+    border-radius: 10px;
 }
 
 
@@ -280,6 +280,7 @@ nav ul li:hover,
 #favorites-section p:hover {
     transform: scale(1.02);
     cursor: pointer;
+    transform: scale(1.02);
     background-color: rgb(80, 3, 150);
 }
 
@@ -347,6 +348,18 @@ h3 {
     width: 80%;
     color: white;
     margin-bottom: 50px;
+    font-size: 1em;
+    font-family: var(--secondary-font);
+    color: var(--white);
+    border: 1px solid var(--white);
+    background-color: var(--blue);
+}
+
+#favoriteBtn {
+    display: block;
+    margin: 0 auto;
+    width: 90%;
+    color: white;
     font-size: 1em;
     font-family: var(--secondary-font);
     color: var(--white);
