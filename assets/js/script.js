@@ -1,407 +1,248 @@
-const apiUrl1 = 'https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=Ordinary_Drink';
-const apiUrl2 = 'https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=Cocktail';
-const apiUrl3 = 'https://www.thecocktaildb.com/api/json/v1/1/random.php';
-const apiUrl4 = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=margarita'
-const loadedInfo = document.querySelector('#loadedInfo');
-const favoriteModalButton = document.querySelector('#favoriteBtn');
+// favorites variable
 let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
 
-function fetchCocktails() {
- 
-  fetch(apiUrl1)
-    .then(response => response.json())
-    .then(data => {
-      const cocktails1 = data.drinks;
-    
-      console.log('Cocktails from apiUrl1:', cocktails1);
-    })
-    .catch(error => {
-      console.error('Error fetching cocktail data from apiUrl1:', error);
-    });
-
-  fetch(apiUrl2)
-    .then(response => response.json())
-    .then(data => {
-      const cocktails2 = data.drinks;
-     
-      console.log('Cocktails from apiUrl2:', cocktails2);
-    })
-    .catch(error => {
-      console.error('Error fetching cocktail data from apiUrl2:', error);
-    });
-
-    const apiUrl4 = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=margarita'
-  fetch(apiUrl4)
-    .then(response => response.json())
-    .then(data => {
-      const cocktails = data.drinks;
-
-      console.log('Cocktails from originalApiUrl:', cocktails);
-    })
-    .catch(error => {
-      console.error('Error fetching cocktail data from originalApiUrl:', error);
-    });
-}
-function displayCocktails(cocktails) {
-  const loadedInfo = document.getElementById('loadedInfo');
-  loadedInfo.innerHTML = ''; 
-  if (cocktails && cocktails.length > 0) {
-    cocktails.forEach(cocktail => {
-      const cocktailName = cocktail.strDrink;
-      const cocktailElement = document.createElement('p');
-      cocktailElement.textContent = cocktailName;
-      loadedInfo.appendChild(cocktailElement);
-    });
-  } else {
-    loadedInfo.textContent = 'No cocktails found';
-  }
-}
-
-document.addEventListener('DOMContentLoaded', function() {
-
-  const searchButton = document.getElementById('search-button');
-  searchButton.addEventListener('click', function() {
-   
-    const searchQuery = document.getElementById('searchBar').value;
-   
-    const apiUrl = `https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${searchQuery}`;
-    
-    fetchCocktails(apiUrl);
-  });
-
-  
-  function fetchCocktails(apiUrl) {
-    fetch(apiUrl)
-      .then(response => response.json())
-      .then(data => {
-        const cocktails = data.drinks;
-        console.log('Cocktails:', cocktails);
-        
-      })
-      .catch(error => {
-        console.error('Error fetching cocktail data:', error);
-      });
-  }
+// displays the saved favorites when the page is loaded
+document.addEventListener('DOMContentLoaded', function() {    // WHEN the page is loaded
+  renderFavorites();                                          // THEN the favorites are rendered onto the page
 });
-
-fetchCocktails();
-
-
-
-Promise.all([fetchCocktails(apiUrl1), fetchCocktails(apiUrl2), fetchCocktails(apiUrl3)])
-  .then(([ordinaryDrinks, cocktails, randomDrink]) => {
-    console.log('Ordinary Drinks:', ordinaryDrinks);
-    console.log('Cocktails:', cocktails);
-    console.log('Random', randomDrink)
-  });
   
 // function to render the drinks on the page and handle their favorite button functionality
-function renderDrinks(data) {
-  const loadedInfo = document.getElementById('loadedInfo');
-  while (loadedInfo.firstChild) {
-    loadedInfo.removeChild(loadedInfo.firstChild);
+function renderDrinks(data) {                                                                 // WHEN the renderDrinks function is called
+  let loadedInfo = document.querySelector('#loadedInfo');                                     // THEN the loadedInfo section is referenced
+  while (loadedInfo.firstChild) {                                                             // WHILE the loaded info section contains children
+    loadedInfo.removeChild(loadedInfo.firstChild);                                            // THEN each child will be removed
   }
 
-  if (data && data.drinks && data.drinks.length > 0) {
-    data.drinks.forEach(cocktail => {
-      const cocktailElement = document.createElement('div');
-      const cocktailName = cocktail.strDrink;
+  for (i=0; i < data.drinks.length; i++) {                                                    // FOR each item in the drinks array
+    let cocktailElement = document.createElement('div');                                      // THEN a cocktailElement div will be created
+    
+    let cocktailName = document.createElement('h3');                                          // THEN a h3 tag will be created
+    cocktailName.innerHTML = data.drinks[i].strDrink;                                         // THEN the text within the h3 element will become the name of the drink
+    cocktailElement.appendChild(cocktailName);                                                // THEN the h3 tag will be appended to the cocktailElement div
 
-      const cocktailNameHeading = document.createElement('h3');
-      cocktailNameHeading.textContent = cocktailName;
+    let drinkImg = document.createElement('img');                                             // THEN an img tag will be created
+    drinkImg.setAttribute('src', data.drinks[i].strDrinkThumb);                               // THEN the image will become an image of the drink
+    cocktailElement.appendChild(drinkImg);                                                    // THEN the img tag will be appended to the cocktailElement div
 
-      const drinkImg = document.createElement('img');
-      drinkImg.src = cocktail.strDrinkThumb;
+    let favoriteButton = document.createElement('button');                                    // THEN a button element is created
+    favoriteButton.textContent = 'Favorite';                                                  // THEN the text content of the button becomes "favorite"
+    let isFavorited = favorites.some(favorite => favorite === cocktailName.innerHTML);        // THEN all the favorited drinks are checked
+    if (isFavorited) {                                                                        // IF the drink is already favorited
+      favoriteButton.textContent = 'Favorited';                                               // THEN the text reads "favorited" instead of "favorite"
+    }
+    cocktailElement.appendChild(favoriteButton);                                              // THEN the button is appended to the cocktailElement div
 
-      const favoriteButton = document.createElement('button');
-      favoriteButton.textContent = 'Favorite';
-
-      let isFavorited = favorites.some(favorite => favorite.name === cocktailName);
-      if (isFavorited) {
-        favoriteButton.textContent = 'Favorited';
+    favoriteButton.addEventListener('click', function(button) {                               // WHEN the favorite button is clicked
+      let isFavorited = favorites.some(favorite => favorite === cocktailName.innerHTML);      // THEN all the favorited drinks are checked
+      if (!isFavorited || button.innerHTML === 'favorite') {                                  // IF the drink is not favorited
+          favorites.push(cocktailName.innerHTML);                                             // THEN the drink name is added to the favorites array
+          localStorage.setItem('favorites', JSON.stringify(favorites));                       // THEN the favorites array is saved to local storage
+          favoriteButton.textContent = 'Favorited';                                           // THEN the text of the favorites button is changed to say "favorited" instead of "favorite"
+          
+        } else {                                                                              // IF the drink is favorited
+          favorites = favorites.filter(favorite => favorite !== cocktailName.innerHTML);      // THEN the drink name is removed from the favorites array
+          localStorage.setItem('favorites', JSON.stringify(favorites));                       // THEN the favorites array is saved to local storage
+          favoriteButton.textContent = 'Favorite';                                            // THEN the text of the favorites button is changed to say "favorite" instead of "favorited"
       }
-
-      favoriteButton.addEventListener('click', () => {
-        if (!isFavorited) {
-            favorites.push({
-                name: cocktailName,
-                imageSrc: cocktail.strDrinkThumb
-            });
-            localStorage.setItem('favorites', JSON.stringify(favorites));
-            favoriteButton.textContent = 'Favorited';
-            isFavorited = true;  // Update the status to favorited
-            
-        } else {
-            favorites = favorites.filter(favorite => favorite.name !== cocktailName);
-            localStorage.setItem('favorites', JSON.stringify(favorites));
-            favoriteButton.textContent = 'Favorite';
-            isFavorited = false; // Update the status to not favorited
-            
-        }
-        displayFavorites(); // Render the favorites section after a change in favorites
+      renderFavorites();                                                                      // THEN the favorited drinks are rendered onto the page
     });
-
-      cocktailElement.appendChild(cocktailNameHeading);
-      cocktailElement.appendChild(drinkImg);
-      cocktailElement.appendChild(favoriteButton);
-
-      loadedInfo.appendChild(cocktailElement);
-    });
-  } else {
-    loadedInfo.textContent = 'No cocktails found';
+    loadedInfo.appendChild(cocktailElement);                                                  // THEN the cocktailElement div is appended to theloadedInfo section
   }
 }
 
-
-function displayDrinkDetails(drinkName) {
-  // Fetch details of the clicked drink by its name
-  let apiUrl = `https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${drinkName}`;
-  fetch(apiUrl)
-      .then(response => response.json())
-      .then(data => {
-          let drink = data.drinks[0];
-          if (drink) {
-              const loadedInfo = document.getElementById('loadedInfo');
-              loadedInfo.innerHTML = ''; // Clear previous content
-
-              // Create elements to display drink details
-              const cocktailNameElement = document.createElement('h3');
-              cocktailNameElement.textContent = drink.strDrink;
-
-              const cocktailImageElement = document.createElement('img');
-              cocktailImageElement.src = drink.strDrinkThumb;
-              cocktailImageElement.alt = drink.strDrink;
-
-              const ingredientsList = document.createElement('ul');
-              // Loop through the ingredients and add them to the list
-              for (let i = 1; i <= 15; i++) { // Assuming there are maximum 15 ingredients
-                  const ingredient = drink[`strIngredient${i}`];
-                  const measure = drink[`strMeasure${i}`];
-                  if (ingredient) {
-                      const listItem = document.createElement('li');
-                      listItem.textContent = `${ingredient} - ${measure}`;
-                      ingredientsList.appendChild(listItem);
-                  } else {
-                      break; // No more ingredients
-                  }
-              }
-
-              // Append elements to loaded-info section
-              loadedInfo.appendChild(cocktailNameElement);
-              loadedInfo.appendChild(cocktailImageElement);
-              loadedInfo.appendChild(ingredientsList);
-          } else {
-              console.error('Drink details not found.');
-          }
-      })
-      .catch(error => {
-          console.error('Error fetching drink details:', error);
+// function to render the favorites section onto the page
+function renderFavorites() {                                                          // WHEN the renderFavorites function is called
+  let favoriteDrinksSection = document.querySelector("#favoriteDrinks");              // THEN the favorite drinks section is referenced
+  while (favoriteDrinksSection.firstChild) {                                          // WHILE the favorites section has children
+    favoriteDrinksSection.removeChild(favoriteDrinksSection.firstChild);              // THEN each child will be removed
+  }
+  if (favorites) {                                                                    // IF there are favorites saved in the local storage
+    for (let i = 0; i < favorites.length; i++) {                                      // FOR each element in the favorites array
+      let favoriteDrink = document.createElement('p');                                // THEN a p element will be created
+      favoriteDrink.innerHTML = favorites[i];                                         // THEN the text of the p tag will become the drink name
+      favoriteDrinksSection.appendChild(favoriteDrink);                               // THEN the p tag is appended to the favoriteDrinks section
+    
+      favoriteDrink.addEventListener('click', function() {                            // WHEN any p tag is clicked
+        displayDrinkDetails(favorites[i]);                                            // THEN the details of the clicked favorite drink are displayed
       });
+    }
+  }
 }
 
-// displays drinks to the page when a drink name or ingredient is searched
-document.addEventListener('DOMContentLoaded', function() {
-  const searchButton = document.getElementById('search-button');
+// function to display the drink details for the favorite drinks
+function displayDrinkDetails(drinkName) {                                                   // WHEN the displayDrinkDetails function is called
+  fetch(`https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${drinkName}`)            // THEN the drink name is searched in the API
+    .then(response => response.json())
+    .then(data => {                                                                         // IF the fetch is successful
+       makeModal(data);                                                                     // THEN a modal is displayed 
+    })
+    .catch(error => {                                                                       // IF the fetch is unsuccessful
+      console.error('Error fetching drink details:', error);                                // THEN an error is displayed in the console
+    });
+}
 
-  searchButton.addEventListener('click', function() {
-    const searchQuery = document.getElementById('searchBar').value;
-    const apiUrl = `https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${searchQuery}`;
+// function to handle modal functionality
+function makeModal(data) {                                                                  // WHEN the makeModal function is called
+  let modal = document.getElementById("myModal");                                           // THEN the modal element is referenced
+  let closeModal = document.getElementsByClassName("close")[0];                             // THEN the closeModal button is referenced
+  let drink = data.drinks[0];                                                               // THEN the drink is stored in a variable
+  let cocktailName = document.querySelector('#cocktail-name');                              // THEN the cocktailName element is stored in a variable
+  let cocktailDetails = document.querySelector('#cocktail-details');                        // THEN the cocktailDetails element is stored in a variable
+  let cocktailImg = document.querySelector('#cocktail-image');                              // THEN the cocktailImg element is stored in a variable
+  let favoriteButton = document.querySelector('#favoriteBtn');                              // THEN the favorite button is referenced
 
-    fetch(apiUrl)
-      .then(response => response.json())
-      .then(data => {
-       renderDrinks(data);
-      })
-      .catch(error => {
-        console.error('Error fetching cocktail data:', error);
-      });
+  cocktailName.textContent = drink.strDrink;                                                // THEN the name becomes the drink's name
+  cocktailImg.src = drink.strDrinkThumb;                                                    // THEN the image becomes the drink's image
+  cocktailDetails.innerHTML = '';                                                           // THEN the former ingredients are removed
+
+  for (let [key, value] of Object.entries(drink)) {                                         // FOR the drink object array of its key-value pairs
+    if (key.includes('strIngredient') && value) {                                           // IF the key includes the strIngredient
+      cocktailDetails.innerHTML += `<li>${value}</li>`;                                     // THEN the ingredients are added as a list
+    }
+  }
+
+  modal.style.display = "block";                                                            // THEN the modal is displayed on the page
+
+  favoriteButton.textContent = 'favorite'
+  
+  let isFavorited = favorites.some(favorite => favorite === cocktailName.innerHTML);        // THEN the favorites are checked
+  if (isFavorited) {                                                                        // IF the drink is already favorited
+    favoriteButton.textContent = 'Favorited';                                               // THEN the button text will be changed to "favorited"
+  }
+
+  function handleFavoritesEvent(event) {                                                    // THEN the handleFavoritesEvent function is stored in a variable                                          
+    handleFavorites(event, cocktailName, favoriteButton);                                   // THEN the handleFunctionsEvent runs the handleFavorites function
+  }
+
+  favoriteButton.addEventListener('click', handleFavoritesEvent);                           // THEN the event listener for the favorite button will be added to the modal
+
+  closeModal.onclick = function() {                                                         // WHEN the modal is closed
+    favoriteButton.removeEventListener('click', handleFavoritesEvent);                      // THEN the event listener for the favorite button will be removed from the modal
+    modal.style.display = "none";                                                           // THEN the modal is removed from the page
+    let loadedDrinkButtons = document.querySelectorAll('#loadedInfo button');               // THEN the drink buttons loaded on the page are selected
+    loadedDrinkButtons.forEach(function(button) {                                           // FOR EACH of the loaded buttons on the page
+      let h3Element = button.closest('div').querySelector('h3');                            // THEN the nearest h3 element (the drink's name) is referenced
+      if (h3Element.textContent === cocktailName.textContent) {                             //IF the nearest h3 element text matches the modal's cocktail name
+        let isFavorited = favorites.some(favorite => favorite === cocktailName.textContent);// THEN the favorites are referenced
+        if (isFavorited) {                                                                  // IF the drink is favorited
+          button.textContent = 'Favorited';                                                 // THEN the drink's button will say "unfavorite"
+        } else {                                                                            // IF the drink is not favorited
+          button.textContent = 'Favorite';                                                  // THEN the drink's button will say "favorite"
+        }
+      }
+    });
+  }
+}
+
+// function to handle the button functionality within the modals
+function handleFavorites(event, cocktailName, favoriteButton) {                             // WHEN the handleFavorites function is called
+  event.preventDefault();                                                                   // THEN the page does not refresh
+  
+  let isFavorited = favorites.some(favorite => favorite === cocktailName.innerHTML);        // THEN the favorites are referenced
+  if (!isFavorited) {                                                                       // IF the drink is not favorited
+    favorites.push(cocktailName.innerHTML);                                                 // THEN it is added to the favorites array
+    localStorage.setItem('favorites', JSON.stringify(favorites));                           // THEN the favorites are updated in local storage
+    favoriteButton.textContent = 'Favorited';                                               // THEN the button text is changed to "favorited"
+    isFavorited = true;                                                                     // THEN the status is set to favorited
+  } else {                                                                                  // IF the drink is favorited
+    favorites = favorites.filter(favorite => favorite !== cocktailName.innerHTML);          // THEN it is removed from the favorites array
+    localStorage.setItem('favorites', JSON.stringify(favorites));                           // THEN the favorites are updated in local storage
+    favoriteButton.textContent = 'Favorite';                                                // THEN the button text is changed to "favorite"
+    isFavorited = false;                                                                    // THEN the status is set to not favorited
+  }
+  
+  renderFavorites();                                                                        // THEN the favorites are rendered to the page
+}
+
+// displays drinks to the page when a drink name is searched
+let searchButton = document.getElementById('search-button');
+searchButton.addEventListener('click', function() {                                   // WHEN the search button is clicked
+  let searchQuery = document.getElementById('searchBar').value;
+
+  fetch(`https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${searchQuery}`)    // THEN the search is fetched in the drink name API
+    .then(response => response.json())
+    .then(data => {                                                                   // IF the fetch is successful
+      renderDrinks(data);                                                             // THEN the drinks are rendered onto the page
+    })
+    .catch(error => {                                                                 // IF the fetch is unsuccessful
+      console.error('Error fetching cocktail data:', error);                          // THEN an error is displayed in the console
+    });
+});
+
+// displays random drink in a modal when the "I'm feeling adventurous button is clicked
+const randomButton = document.querySelector('#randomBtn');
+randomButton.addEventListener('click', function() {                       // WHEN the "I'm feeling adventurous" button is clicked
+  fetch('https://www.thecocktaildb.com/api/json/v1/1/random.php')         // The random API is fetched
+  .then(res => res.json())
+  .then(data => {                                                         // IF the fetch is successful
+    makeModal(data)                                                       // THEN a modal with the drink details is shown
+  })
+  .catch(error => {                                                       // IF the fetch is unsuccessful
+    console.error('Error fetching cocktail data:', error);                // THEN an error is displayed in the console
   });
 });
 
 // displays drinks with vodka to the page when the "vodka" button is clicked
-let vodkaButton = document.querySelector('#vodka');
-vodkaButton.addEventListener('click', function() {
-  fetch('https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=Vodka')
+const vodkaButton = document.querySelector('#vodka');
+vodkaButton.addEventListener('click', function() {                            // WHEN the "vodka" text is clicked
+  fetch('https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=Vodka')     // THEN the ingredient is searched in the API
     .then(response => response.json())
-    .then(data => {
-      renderDrinks(data);
+    .then(data => {                                                           // IF the fetch is successful
+      renderDrinks(data);                                                     // THEN the drinks are rendered onto the page
     })
-    .catch(error => {
-      console.error('Error fetching cocktail data:', error);
+    .catch(error => {                                                         // IF the fetch is unsuccessful
+      console.error('Error fetching cocktail data:', error);                  // THEN an error is displayed in the console
     });
 })
 
 // displays drinks with gin to the page when the "gin" button is clicked
-let ginButton = document.querySelector('#gin');
-ginButton.addEventListener('click', function() {
-  fetch('https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=Gin')
+const ginButton = document.querySelector('#gin');
+ginButton.addEventListener('click', function() {                              // WHEN the "gin" text is clicked
+  fetch('https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=Gin')       // THEN the ingredient is searched in the API
     .then(response => response.json())
     .then(data => {
-      renderDrinks(data);
+      renderDrinks(data);                                                     // THEN the drinks are rendered onto the page
     })
-    .catch(error => {
-      console.error('Error fetching cocktail data:', error);
+    .catch(error => {                                                         // IF the fetch is unsuccessful
+      console.error('Error fetching cocktail data:', error);                  // THEN an error is displayed in the console
     });
 })
 
 // displays drinks with whiskey to the page when the "whiskey" button is clicked
-let whiskeyButton = document.querySelector('#whiskey');
-whiskeyButton.addEventListener('click', function() {
-  fetch('https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=Whiskey')
+const whiskeyButton = document.querySelector('#whiskey');
+whiskeyButton.addEventListener('click', function() {                          // WHEN the "gin" text is clicked
+  fetch('https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=Whiskey')   // THEN the ingredient is searched in the API
     .then(response => response.json())
     .then(data => {
-      renderDrinks(data);
+      renderDrinks(data);                                                     // THEN the drinks are rendered onto the page
     })
-    .catch(error => {
-      console.error('Error fetching cocktail data:', error);
+    .catch(error => {                                                         // IF the fetch is unsuccessful
+      console.error('Error fetching cocktail data:', error);                  // THEN an error is displayed in the console
     });
 })
   
 // displays drinks with bourbon to the page when the "bourbon" button is clicked
-let bourbonButton = document.querySelector('#bourbon');
-bourbonButton.addEventListener('click', function() {
-  fetch('https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=Bourbon')
+const bourbonButton = document.querySelector('#bourbon');
+bourbonButton.addEventListener('click', function() {                          // WHEN the "bourbon" text is clicked
+  fetch('https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=Bourbon')   // THEN the ingredient is searched in the API
     .then(response => response.json())
     .then(data => {
-      renderDrinks(data);
+      renderDrinks(data);                                                     // THEN the drinks are rendered onto the page
     })
-    .catch(error => {
-      console.error('Error fetching cocktail data:', error);
+    .catch(error => {                                                         // IF the fetch is unsuccessful
+      console.error('Error fetching cocktail data:', error);                  // THEN an error is displayed in the console
     });
 })
 
 // displays drinks with tequila to the page when the "tequila" button is clicked
-let tequilaButton = document.querySelector('#tequila');
-tequilaButton.addEventListener('click', function() {
-  fetch('https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=Tequila')
+const tequilaButton = document.querySelector('#tequila');
+tequilaButton.addEventListener('click', function() {                          // WHEN the "bourbon" text is clicked
+  fetch('https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=Tequila')   // THEN the ingredient is searched in the API
     .then(response => response.json())
-    .then(data => {
-      renderDrinks(data);
+    .then(data => {                                                           // IF the fetch is successful
+      renderDrinks(data);                                                     // THEN the drinks are rendered onto the page
     })
-    .catch(error => {
-      console.error('Error fetching cocktail data:', error);
+    .catch(error => {                                                         // IF the fetch is unsuccessful
+      console.error('Error fetching cocktail data:', error);                  // THEN an error is displayed in the console
     });
 })
-
-// displays the saved favorites when the page is loaded
-document.addEventListener('DOMContentLoaded', function() {    // WHEN the page is loaded
-  displayFavorites();                                          // THEN the favorites are rendered onto the page
-});
-
-
-const randomButton = document.querySelector('#randomBtn');
-const modal = document.getElementById("myModal");
-const closeModal = document.getElementsByClassName("close")[0];
-
-function getRandomCocktail() {
-  fetch('https://www.thecocktaildb.com/api/json/v1/1/random.php')
-  .then(res => res.json())
-  .then(data => {
-    const randomCocktail = data.drinks[0];
-    const cocktailNameElement = document.querySelector('#cocktail-name');
-    const cocktailDetailsElement = document.querySelector('#cocktail-details');
-    const cocktailImageElement = document.querySelector('#cocktail-image');
-    const favoriteButton = document.querySelector('#favoriteBtn')
-    
-    if (randomCocktail && cocktailNameElement && cocktailImageElement && cocktailDetailsElement) {
-      cocktailNameElement.textContent = randomCocktail.strDrink;
-      cocktailImageElement.src = randomCocktail.strDrinkThumb;
-      cocktailImageElement.innerHTML = '';
-      cocktailDetailsElement.innerHTML = '';
-
-      for (const [key, value] of Object.entries(randomCocktail)) {
-        if (key.startsWith('strIngredient') && value) {
-          const ingredientNumber = key.slice('strIngredient'.length);
-          const measurement = randomCocktail[`strMeasure${ingredientNumber}`];
-          cocktailDetailsElement.innerHTML += `<li>${value} - ${measurement}</li>`;
-        }}
-       
-        modal.style.display = "block";
-       
-        favoriteButton.onclick = function() {
-          toggleFavorite(randomCocktail);
-      };
-      }
-    })
-    .catch(error => {
-      console.error('Error fetching cocktail data:', error);
-    });
-}
-
-
-closeModal.onclick = function() {
-  modal.style.display = "none";
-}
-
-
-window.onclick = function(event) {
-  if (event.target == modal) {
-    modal.style.display = "none";
-  }
-}
-
-randomButton.addEventListener('click', getRandomCocktail);
-
-document.getElementById('favoriteBtn').addEventListener('click', function() {
-  const cocktailName = document.getElementById('cocktail-name').innerText;
-  const cocktailImageSrc = document.getElementById('cocktail-image').src;
-  
-  const favoriteCocktail = {
-    name: cocktailName,
-    imageSrc: cocktailImageSrc
-  };
-
-  saveFavoriteCocktail(favoriteCocktail);
-  displayFavorites();
-});
-
-function saveFavoriteCocktail(cocktail) {
-  let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
-  if (!favorites.some(fav => fav.name === cocktail.name)) {
-    favorites.push(cocktail);
-    localStorage.setItem('favorites', JSON.stringify(favorites));
-  }
-}
-
-function displayFavorites() {
-  const favorites = JSON.parse(localStorage.getItem('favorites')) || [];
-  const favoritesContainer = document.getElementById('favoriteDrinks'); 
-  favoritesContainer.innerHTML = ''; 
-
-  favorites.forEach(cocktail => {
-    const div = document.createElement('div');
-    div.classList.add('favorite-drink');
-    div.innerHTML = `<h3>${cocktail.name}</h3><img src="${cocktail.imageSrc}" alt="${cocktail.name}" style="width: 100px; height: 100px;">`;
-    
-    const unfavoriteButton = document.createElement('button');
-    unfavoriteButton.textContent = 'Unfavorite';
-    unfavoriteButton.addEventListener('click', () => {
-      removeFavorite(cocktail.name);
-    });
-    
-    div.appendChild(unfavoriteButton);
-    favoritesContainer.appendChild(div);
-  });
-}
-
-function removeFavorite(cocktailName) {
-  let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
-  
-  favorites = favorites.filter(cocktail => cocktail.name !== cocktailName);
-  localStorage.setItem('favorites', JSON.stringify(favorites));
-  displayFavorites();
-  console.log(favorites)
-}
-
-document.addEventListener('DOMContentLoaded', function() {
-  const favoriteDrinksSection = document.getElementById('favoriteDrinks');
-
-  // Add event listener to each favorite drink element
-  favoriteDrinksSection.addEventListener('click', function(event) {
-      const clickedDrink = event.target.textContent;
-      displayDrinkDetails(clickedDrink);
-  });
-});
-
- 
-document.addEventListener('DOMContentLoaded', displayFavorites);
