@@ -7,7 +7,8 @@ document.addEventListener('DOMContentLoaded', function() {    // WHEN the page i
 });
   
 // function to render the drinks on the page and handle their favorite button functionality
-function renderDrinks(data) {                                                                 // WHEN the renderDrinks function is called
+function renderDrinks(data) {  
+                                                                                              // WHEN the renderDrinks function is called
   let loadedInfo = document.querySelector('#loadedInfo');                                     // THEN the loadedInfo section is referenced
   while (loadedInfo.firstChild) {                                                             // WHILE the loaded info section contains children
     loadedInfo.removeChild(loadedInfo.firstChild);                                            // THEN each child will be removed
@@ -29,7 +30,7 @@ function renderDrinks(data) {                                                   
     let isFavorited = favorites.some(favorite => favorite === cocktailName.innerHTML);        // THEN all the favorited drinks are checked
     if (isFavorited) {                                                                        // IF the drink is already favorited
       favoriteButton.textContent = 'Favorited';                                               // THEN the text reads "favorited" instead of "favorite"
-    }
+    }}
     cocktailElement.appendChild(favoriteButton);                                              // THEN the button is appended to the cocktailElement div
 
     favoriteButton.addEventListener('click', function(button) {                               // WHEN the favorite button is clicked
@@ -43,7 +44,7 @@ function renderDrinks(data) {                                                   
           favorites = favorites.filter(favorite => favorite !== cocktailName.innerHTML);      // THEN the drink name is removed from the favorites array
           localStorage.setItem('favorites', JSON.stringify(favorites));                       // THEN the favorites array is saved to local storage
           favoriteButton.textContent = 'Favorite';                                            // THEN the text of the favorites button is changed to say "favorite" instead of "favorited"
-      }
+        }});
 
       favoriteButton.addEventListener('click', () => {
         if (!isFavorited) {
@@ -62,8 +63,9 @@ function renderDrinks(data) {                                                   
             isFavorited = false; // Update the status to not favorited
             
         }
-        displayFavorites(); // Render the favorites section after a change in favorites
+        renderFavorites(); // Render the favorites section after a change in favorites
     });
+}
 
 // function to render the favorites section onto the page
 function renderFavorites() {                                                          // WHEN the renderFavorites function is called
