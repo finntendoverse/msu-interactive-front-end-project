@@ -5,6 +5,9 @@ AS a person who likes to drink<br>
 I WANT to be able to search for new drinks<br>
 SO THAT I can get new ideas of drinks to make
 
+## Wireframe
+![Wireframe](./assets/img/Wireframe.png)
+
 ## Installation
 N/A
 
@@ -33,7 +36,7 @@ Dylan Slyter - [Dylanslyter](https://github.com/Dylanslyter)
 ## Deployed Application
 [Deployed Application Link](https://finntendoverse.github.io/msu-interactive-front-end-project/)
 
-![Deployed Application]()
+![Deployed Application](./assets/img/deployed.png)
 
 ## License
 MIT License

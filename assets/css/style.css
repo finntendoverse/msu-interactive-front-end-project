@@ -172,6 +172,7 @@ main {
 #favorites-section {
     flex: 0 0 30%;
     background: var(--purple);
+    font-family: var(--secondary-font);
 }
 
 #favoriteDrinks {
