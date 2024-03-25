@@ -44,26 +44,11 @@ function renderDrinks(data) {                                                   
           localStorage.setItem('favorites', JSON.stringify(favorites));                       // THEN the favorites array is saved to local storage
           favoriteButton.textContent = 'Favorite';                                            // THEN the text of the favorites button is changed to say "favorite" instead of "favorited"
       }
-
-      favoriteButton.addEventListener('click', () => {
-        if (!isFavorited) {
-            favorites.push({
-                name: cocktailName,
-                imageSrc: cocktail.strDrinkThumb
-            });
-            localStorage.setItem('favorites', JSON.stringify(favorites));
-            favoriteButton.textContent = 'Favorited';
-            isFavorited = true;  // Update the status to favorited
-            
-        } else {
-            favorites = favorites.filter(favorite => favorite.name !== cocktailName);
-            localStorage.setItem('favorites', JSON.stringify(favorites));
-            favoriteButton.textContent = 'Favorite';
-            isFavorited = false; // Update the status to not favorited
-            
-        }
-        displayFavorites(); // Render the favorites section after a change in favorites
+      renderFavorites();                                                                      // THEN the favorited drinks are rendered onto the page
     });
+    loadedInfo.appendChild(cocktailElement);                                                  // THEN the cocktailElement div is appended to theloadedInfo section
+  }
+}
 
 // function to render the favorites section onto the page
 function renderFavorites() {                                                          // WHEN the renderFavorites function is called
